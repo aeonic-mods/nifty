@@ -1,0 +1,41 @@
+{
+    "schemaVersion": 1,
+    "id": "nifty",
+    "version": "${version}",
+  
+    "name": "Nifty",
+    "description": "A cross-platform library mod for UI, networking, machinery, transfer and more.",
+    "authors": [
+      "Aeonic"
+    ],
+    "contact": {
+      "homepage": "https://github.com/aeonic-dev",
+      "sources": "https://github.com/aeonic-dev/logic-networks"
+    },
+  
+    "license": "CC0-1.0",
+  
+    "environment": "*",
+    "entrypoints": {
+      "main": [
+        "design.aeonic.nifty.impl.FabricNifty"
+      ],
+      "client": [
+        "design.aeonic.nifty.impl.FabricNifty::onInitializeClient"
+      ]
+    },
+    "mixins": [
+      "nifty.mixins.json",
+      "nifty.fabric.mixins.json"
+    ],
+  
+    "depends": {
+      "fabricloader": ">=0.13",
+      "fabric": "*",
+      "minecraft": "1.19.x",
+      "java": ">=17"
+    },
+    "suggests": {
+    }
+  }
+  
