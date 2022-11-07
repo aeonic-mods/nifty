@@ -1,5 +1,6 @@
 package design.aeonic.nifty.api.services;
 
+import design.aeonic.nifty.api.core.Services;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -18,6 +19,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.function.Supplier;
 
 public interface PlatformAccess {
+    PlatformAccess INSTANCE = Services.ACCESS;
+
     <T extends BlockEntity> BlockEntityType<T> blockEntityType(BlockEntitySupplier<T> supplier, Block... validBlocks);
 
     <T extends AbstractContainerMenu> MenuType<T> menuType(MenuSupplier<T> menuSupplier);

@@ -1,9 +1,7 @@
 package design.aeonic.nifty.impl;
 
-import design.aeonic.nifty.api.Constants;
+import design.aeonic.nifty.api.core.Constants;
 import design.aeonic.nifty.api.util.Registrar;
-import design.aeonic.nifty.impl.ClientNifty;
-import design.aeonic.nifty.impl.Nifty;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;

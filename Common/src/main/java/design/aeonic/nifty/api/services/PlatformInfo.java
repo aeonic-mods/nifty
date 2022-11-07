@@ -1,8 +1,11 @@
 package design.aeonic.nifty.api.services;
 
+import design.aeonic.nifty.api.core.Services;
+
 import java.util.function.Supplier;
 
 public interface PlatformInfo {
+    PlatformInfo INSTANCE = Services.PLATFORM;
 
     default <T> T map(T onForge, T onFabric) {
         return getPlatform().isForge() ? onForge : onFabric;

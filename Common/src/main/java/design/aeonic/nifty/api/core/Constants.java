@@ -1,4 +1,4 @@
-package design.aeonic.nifty.api;
+package design.aeonic.nifty.api.core;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

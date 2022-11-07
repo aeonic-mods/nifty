@@ -1,6 +1,6 @@
 package design.aeonic.nifty.impl;
 
-import design.aeonic.nifty.api.Constants;
+import design.aeonic.nifty.api.core.Constants;
 import design.aeonic.nifty.api.util.Registrar;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
