@@ -17,6 +17,7 @@ public interface Battery<T extends Number> {
 
     /**
      * Inserts into the battery. If simulate is true, the actual battery's stored value will not be changed.
+     * Returns the amount inserted.
      */
     T insert(T amount, boolean simulate);
 
