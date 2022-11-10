@@ -46,6 +46,7 @@ public class ForgeAspects implements Aspects {
         aspectTypes.put(key, type);
         mappedAspectTypes.put(type, new AspectCapability<>(type, capability, commonToForge, forgeToCommon));
         mappedAspectCapabilities.put(capability, new AspectCapability<>(type, capability, commonToForge, forgeToCommon));
+        registryListeners.remove(key).forEach(c -> c.accept(type));
     }
 
     public void registerCapabilities(RegisterCapabilitiesEvent event) {
