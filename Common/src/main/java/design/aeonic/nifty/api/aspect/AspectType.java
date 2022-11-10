@@ -31,7 +31,9 @@ public class AspectType<T> {
         this.empty = true;
     }
 
-
+    public Class<T> getType() {
+        return type;
+    }
 
     public <A> boolean is(AspectType<A> type) {
         return this == type;
