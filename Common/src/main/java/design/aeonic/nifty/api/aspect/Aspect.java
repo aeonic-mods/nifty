@@ -36,7 +36,7 @@ public class Aspect<T> {
     private volatile T value;
     private boolean valid = true;
 
-    private Aspect(Supplier<T> supplier) {
+    public Aspect(Supplier<T> supplier) {
         this.supplier = supplier;
     }
 

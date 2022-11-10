@@ -1,5 +1,6 @@
 package design.aeonic.nifty.api.aspect;
 
+import javax.annotation.Nullable;
 import java.util.Optional;
 
 /**
@@ -17,15 +18,15 @@ public interface AspectProvider<T, CTX> {
      * If the given object is an aspect provider, returns it as such; otherwise returns an empty optional.
      */
     @SuppressWarnings("unchecked")
-    static <P extends AspectProvider<? super P, ?>> Optional<P> as(Class<P> type, Object object) {
-        return type.isAssignableFrom(object.getClass()) ? Optional.of((P) object) : Optional.empty();
+    static <P extends AspectProvider<?, ?>> Optional<P> as(Class<P> type, @Nullable Object object) {
+        return object != null && type.isAssignableFrom(object.getClass()) ? Optional.of((P) object) : Optional.empty();
     }
 
     /**
      * Gets an aspect of the given type, or an empty aspect if the provider doesn't have one or if it
      * can't be accessed with the given context.
      */
-    default <A> Aspect<A> getAspect(AspectType<T> type, CTX context) {
+    default <A> Aspect<A> getAspect(AspectType<A> type, CTX context) {
         return Aspect.empty();
     }
 }

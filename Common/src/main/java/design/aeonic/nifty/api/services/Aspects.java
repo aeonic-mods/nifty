@@ -33,9 +33,10 @@ public interface Aspects {
     <T> Aspect<T> getAspect(AspectType<T> type, ItemStack stack);
 
     /**
-     * Registers the given aspect type.
+     * Registers the given aspect type. On Forge, this also registers a capability for the given type if one doesn't
+     * already exist.
      */
-    <T> void registerAspectType(AspectType<T> type);
+    <T> void registerAspectType(ResourceLocation key, AspectType<T> type);
 
     /**
      * Returns an aspect type with the given key. If one hasn't been registered,
@@ -48,5 +49,5 @@ public interface Aspects {
      * Runs a given consumer when an aspect type is registered with the given key.
      * If said aspect type is already registered, runs the consumer immediately.
      */
-    <T> void onAspectRegistered(ResourceLocation key, Consumer<AspectType<T>> consumer);
+    void onAspectRegistered(ResourceLocation key, Consumer<AspectType<?>> consumer);
 }
