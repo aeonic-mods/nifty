@@ -4,6 +4,7 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.Predicate;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -44,6 +45,8 @@ public interface Storage<T> {
      * If simulate is true, doesn't modify the actual storage contents.
      */
     T insert(int slot, @Nonnull T stack, boolean simulate);
+
+    T extract(Predicate<T> filter, long amount, boolean simulate);
 
     /**
      * Extracts the given amount from the given slot.

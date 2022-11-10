@@ -5,6 +5,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
+import java.util.function.Predicate;
 
 public class SimpleItemStorage extends SimpleStorage<ItemStack> implements ItemStorage {
     public SimpleItemStorage(int size) {
@@ -51,9 +52,22 @@ public class SimpleItemStorage extends SimpleStorage<ItemStack> implements ItemS
         return stack;
     }
 
-    private boolean canStack(ItemStack first, ItemStack second) {
-        if (first.hasTag() != second.hasTag()) return false;
-        return first.sameItem(second) && ItemStack.tagMatches(first, second);
+    @Override
+    public ItemStack extract(Predicate<ItemStack> filter, long amount, boolean simulate) {
+        ItemStack ret = null;
+        for (int i = 0; i < getSlots(); i++) {
+            if (filter.test(getStackInSlot(i))) {
+                if (ret == null) ret = extract(i, amount, simulate);
+                else if (canStack(ret, getStackInSlot(i))) {
+                    long amountLeft = Math.min(amount, ret.getMaxStackSize()) - ret.getCount();
+                    var temp = extract(i, amountLeft, simulate);
+                    if (!temp.isEmpty()) {
+                        ret.grow(temp.getCount());
+                    }
+                }
+            }
+        }
+        return ret == null ? getEmptyStack() : ret;
     }
 
     @Override
@@ -63,5 +77,10 @@ public class SimpleItemStorage extends SimpleStorage<ItemStack> implements ItemS
         if (amount > stack.getCount()) amount = stack.getCount();
 
         return stack.split((int) amount);
+    }
+
+    private boolean canStack(ItemStack first, ItemStack second) {
+        if (first.hasTag() != second.hasTag()) return false;
+        return first.sameItem(second) && ItemStack.tagMatches(first, second);
     }
 }
