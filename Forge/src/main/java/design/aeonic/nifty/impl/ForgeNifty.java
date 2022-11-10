@@ -1,9 +1,17 @@
 package design.aeonic.nifty.impl;
 
 import design.aeonic.nifty.api.core.Constants;
+import design.aeonic.nifty.api.services.Aspects;
+import design.aeonic.nifty.api.transfer.Transfer;
 import design.aeonic.nifty.api.util.Registrar;
+import design.aeonic.nifty.impl.services.ForgeAspects;
+import design.aeonic.nifty.impl.transfer.fluid.ForgeFluidStorage;
+import design.aeonic.nifty.impl.transfer.fluid.StorageFluidHandler;
+import design.aeonic.nifty.impl.transfer.item.ForgeItemStorage;
+import design.aeonic.nifty.impl.transfer.item.StorageItemHandler;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -20,13 +28,11 @@ public class ForgeNifty {
             ClientNifty.clientInit(event::enqueueWork);
         });
 
-//        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
-//        modBus.addListener((RegisterEvent event) -> {
-//            NetworkBlocks.register(registrar(event, ForgeRegistries.Keys.BLOCKS));
-//            NetworkItems.register(registrar(event, ForgeRegistries.Keys.ITEMS));
-//            NetworkBlockEntities.register(registrar(event, ForgeRegistries.Keys.BLOCK_ENTITY_TYPES));
-//            NetworkMenus.register(registrar(event, ForgeRegistries.Keys.MENU_TYPES));
-//        });
+        modBus.addListener(((ForgeAspects) Aspects.INSTANCE)::registerCapabilities);
+
+        ForgeAspects aspects = (ForgeAspects) Aspects.INSTANCE;
+        aspects.registerMapped(Transfer.ITEM, Transfer.ITEM_ASPECT, ForgeCapabilities.ITEM_HANDLER, StorageItemHandler::new, ForgeItemStorage::new);
+        aspects.registerMapped(Transfer.FLUID, Transfer.FLUID_ASPECT, ForgeCapabilities.FLUID_HANDLER, StorageFluidHandler::new, ForgeFluidStorage::new);
     }
 
     <T> Registrar<T> registrar(RegisterEvent event, ResourceKey<? extends Registry<T>> registry) {
