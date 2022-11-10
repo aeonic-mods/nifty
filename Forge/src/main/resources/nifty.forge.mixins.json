@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "ForgeBlockEntityMixin",
+    "ForgeEntityMixin",
+    "ForgeItemStackMixin",
     "access.CapabilityManagerAccess"
   ],
   "client": [
