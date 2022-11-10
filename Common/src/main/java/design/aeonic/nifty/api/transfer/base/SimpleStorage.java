@@ -9,7 +9,7 @@ public abstract class SimpleStorage<T> implements Storage<T> {
     private NonNullList<T> contents;
 
     public SimpleStorage(int size) {
-        resize(size);
+        contents = NonNullList.withSize(size, getEmptyStack());
     }
 
     public void set(int slot, T stack) {
