@@ -13,8 +13,8 @@ import java.util.function.Supplier;
  * want to expose an aspect. This object *must* be cached by the provider and its invalidate methods
  * must be used appropriately when the object that it points to becomes invalid or its access changes.
  * The Aspect must also be created with a supplier to a non-null object; rather than returning
- * null when the object is no longer available, call {@link Aspect#invalidate()} and a null
- * value will be returned to objects consuming this Aspect.<br><br>
+ * null when the object is no longer available, call {@link Aspect#invalidate()} and an empty
+ * optional will be returned to objects consuming this Aspect.<br><br>
  *
  * When the object that an Aspect points to becomes invalid, call the {@link #invalidate()} method.
  * This method should also be called if the Aspect's access changes; for example, given a change in side
@@ -27,7 +27,7 @@ import java.util.function.Supplier;
  * This class is much like Forge's LazyOptional, but intended for use on both platforms.
  */
 public class Aspect<T> {
-    private static final Aspect<?> EMPTY = new Aspect<>(() -> null);
+    private static final Aspect<?> EMPTY = new Aspect<>(null);
 
     private final Object lock = new Object();
     private final Supplier<T> supplier;
@@ -37,7 +37,12 @@ public class Aspect<T> {
     private boolean valid = true;
 
     public Aspect(Supplier<T> supplier) {
+        if (supplier == null) valid = false;
         this.supplier = supplier;
+    }
+
+    public static <A> Aspect<A> of(Supplier<A> supplier) {
+        return new Aspect<>(supplier);
     }
 
     public static <A> Aspect<A> empty() {
@@ -60,7 +65,7 @@ public class Aspect<T> {
      * If the Aspect is valid and present, passes it to the given consumer.
      */
     public void ifPresent(Consumer<? super T> consumer) {
-        get().ifPresent(consumer);
+        if (isPresent()) consumer.accept(getNonnull());
     }
 
     /**
