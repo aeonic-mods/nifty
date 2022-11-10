@@ -38,9 +38,19 @@ public interface PlatformInfo {
     boolean isDevelopmentEnvironment();
 
     enum Platform {
-        FORGE,
+        FORGE("forge"),
         // Forgen't
-        NOT_FORGE;
+        NOT_FORGE("fabric");
+
+        private final String name;
+
+        Platform(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
 
         public boolean isForge() {
             return this == FORGE;
