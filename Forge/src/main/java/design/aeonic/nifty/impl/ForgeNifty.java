@@ -2,16 +2,15 @@ package design.aeonic.nifty.impl;
 
 import design.aeonic.nifty.api.core.Constants;
 import design.aeonic.nifty.api.services.Aspects;
-import design.aeonic.nifty.api.transfer.Battery;
 import design.aeonic.nifty.api.transfer.Transfer;
 import design.aeonic.nifty.api.util.Registrar;
 import design.aeonic.nifty.impl.services.ForgeAspects;
-import design.aeonic.nifty.impl.transfer.energy.BatteryEnergyStorage;
+import design.aeonic.nifty.impl.transfer.energy.NiftyEnergyStorage;
 import design.aeonic.nifty.impl.transfer.energy.ForgeEnergyBattery;
 import design.aeonic.nifty.impl.transfer.fluid.ForgeFluidStorage;
-import design.aeonic.nifty.impl.transfer.fluid.StorageFluidHandler;
+import design.aeonic.nifty.impl.transfer.fluid.NiftyFluidHandler;
 import design.aeonic.nifty.impl.transfer.item.ForgeItemStorage;
-import design.aeonic.nifty.impl.transfer.item.StorageItemHandler;
+import design.aeonic.nifty.impl.transfer.item.NiftyItemHandler;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -34,9 +33,9 @@ public class ForgeNifty {
         modBus.addListener(((ForgeAspects) Aspects.INSTANCE)::registerCapabilities);
 
         ForgeAspects aspects = (ForgeAspects) Aspects.INSTANCE;
-        aspects.registerMapped(Transfer.ITEM, Transfer.ITEM_ASPECT, ForgeCapabilities.ITEM_HANDLER, StorageItemHandler::new, ForgeItemStorage::new);
-        aspects.registerMapped(Transfer.FLUID, Transfer.FLUID_ASPECT, ForgeCapabilities.FLUID_HANDLER, StorageFluidHandler::new, ForgeFluidStorage::new);
-        aspects.registerMapped(Transfer.ENERGY, Transfer.ENERGY_ASPECT, ForgeCapabilities.ENERGY, BatteryEnergyStorage::new, ForgeEnergyBattery::new);
+        aspects.registerMapped(Transfer.ITEM, Transfer.ITEM_ASPECT, ForgeCapabilities.ITEM_HANDLER, NiftyItemHandler::new, ForgeItemStorage::new);
+        aspects.registerMapped(Transfer.FLUID, Transfer.FLUID_ASPECT, ForgeCapabilities.FLUID_HANDLER, NiftyFluidHandler::new, ForgeFluidStorage::new);
+        aspects.registerMapped(Transfer.ENERGY, Transfer.ENERGY_ASPECT, ForgeCapabilities.ENERGY, NiftyEnergyStorage::new, ForgeEnergyBattery::new);
     }
 
     <T> Registrar<T> registrar(RegisterEvent event, ResourceKey<? extends Registry<T>> registry) {
