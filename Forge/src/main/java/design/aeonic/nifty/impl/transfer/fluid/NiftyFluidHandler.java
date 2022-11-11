@@ -3,6 +3,7 @@ package design.aeonic.nifty.impl.transfer.fluid;
 import design.aeonic.nifty.api.transfer.fluid.FluidStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+
 import javax.annotation.Nonnull;
 
 public class NiftyFluidHandler implements IFluidHandler {

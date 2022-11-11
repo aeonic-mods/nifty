@@ -1,5 +1,6 @@
 package design.aeonic.nifty.api.util;
 
+import net.minecraft.world.inventory.ContainerData;
 import org.apache.commons.lang3.Conversion;
 
 /**

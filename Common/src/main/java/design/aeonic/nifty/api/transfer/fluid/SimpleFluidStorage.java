@@ -2,13 +2,8 @@ package design.aeonic.nifty.api.transfer.fluid;
 
 import design.aeonic.nifty.api.transfer.base.SimpleStorage;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.world.item.ItemStack;
-import javax.annotation.Nonnull;
 
 import javax.annotation.Nonnull;
-
-import javax.annotation.Nonnull;
-
 import java.util.function.Predicate;
 
 @MethodsReturnNonnullByDefault

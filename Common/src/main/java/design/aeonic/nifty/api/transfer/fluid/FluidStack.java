@@ -1,6 +1,5 @@
 package design.aeonic.nifty.api.transfer.fluid;
 
-import com.google.common.math.LongMath;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;

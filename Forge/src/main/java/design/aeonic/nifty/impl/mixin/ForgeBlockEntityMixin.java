@@ -8,9 +8,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import javax.annotation.Nonnull;
 import org.spongepowered.asm.mixin.Mixin;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Mixin(BlockEntity.class)

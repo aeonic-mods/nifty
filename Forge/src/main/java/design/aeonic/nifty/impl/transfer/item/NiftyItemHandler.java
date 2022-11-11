@@ -3,6 +3,7 @@ package design.aeonic.nifty.impl.transfer.item;
 import design.aeonic.nifty.api.transfer.item.ItemStorage;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
+
 import javax.annotation.Nonnull;
 
 public class NiftyItemHandler implements IItemHandler {

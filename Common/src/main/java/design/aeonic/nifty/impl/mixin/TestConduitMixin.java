@@ -4,7 +4,6 @@ import design.aeonic.nifty.api.aspect.Aspect;
 import design.aeonic.nifty.api.services.Aspects;
 import design.aeonic.nifty.api.transfer.Transfer;
 import design.aeonic.nifty.api.transfer.item.ItemStorage;
-import design.aeonic.nifty.api.transfer.item.SimpleItemStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;

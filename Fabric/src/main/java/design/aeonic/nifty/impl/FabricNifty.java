@@ -14,7 +14,6 @@ import design.aeonic.nifty.impl.transfer.item.NiftyItemVariantStorage;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;

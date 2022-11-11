@@ -1,7 +1,6 @@
 package design.aeonic.nifty.impl.services;
 
 import design.aeonic.nifty.api.aspect.*;
-import design.aeonic.nifty.api.core.Services;
 import design.aeonic.nifty.api.services.Aspects;
 import design.aeonic.nifty.impl.aspect.ForgeAspect;
 import design.aeonic.nifty.impl.mixin.access.CapabilityManagerAccess;
@@ -12,11 +11,14 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.*;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityProvider;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.util.LazyOptional;
-import javax.annotation.Nonnull;
 import org.objectweb.asm.Type;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;

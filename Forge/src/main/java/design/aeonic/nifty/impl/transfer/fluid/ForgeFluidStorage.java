@@ -4,8 +4,8 @@ import design.aeonic.nifty.api.transfer.fluid.FluidStack;
 import design.aeonic.nifty.api.transfer.fluid.FluidStorage;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.function.Predicate;
 
 public class ForgeFluidStorage implements FluidStorage {

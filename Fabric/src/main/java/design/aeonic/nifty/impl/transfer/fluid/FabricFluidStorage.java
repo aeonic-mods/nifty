@@ -7,9 +7,8 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
-import net.minecraft.world.item.ItemStack;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.function.Predicate;
 
 @SuppressWarnings("UnstableApiUsage")

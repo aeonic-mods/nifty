@@ -1,6 +1,5 @@
 package design.aeonic.nifty.impl.mixin;
 
-import design.aeonic.nifty.api.aspect.AspectProviderBlockEntity;
 import design.aeonic.nifty.api.aspect.AspectProviderItem;
 import design.aeonic.nifty.api.services.Aspects;
 import design.aeonic.nifty.impl.services.ForgeAspects;
@@ -10,10 +9,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import javax.annotation.Nonnull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Mixin(ItemStack.class)
