@@ -26,7 +26,7 @@ public class FabricItemStorage implements ItemStorage {
 
     @Override
     public ItemStack getStackInSlot(int slot) {
-        try (Transaction transaction = Transaction.getCurrentUnsafe().openNested()) {
+        try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             for (StorageView<ItemVariant> view : itemVariantStorage) {
                 if (slot == 0) {
                     return view.getResource().toStack((int) Math.min(view.getAmount(), Integer.MAX_VALUE));
@@ -39,7 +39,7 @@ public class FabricItemStorage implements ItemStorage {
 
     @Override
     public long getSlotCapacity(int slot) {
-        try (Transaction transaction = Transaction.getCurrentUnsafe().openNested()) {
+        try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             for (StorageView<ItemVariant> view : itemVariantStorage) {
                 if (slot == 0) {
                     return view.getCapacity();
@@ -64,7 +64,7 @@ public class FabricItemStorage implements ItemStorage {
 
     @Override
     public ItemStack insert(@NotNull ItemStack stack, boolean simulate) {
-        try (Transaction transaction = Transaction.getCurrentUnsafe().openNested()) {
+        try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             long amountInserted = simulate ? itemVariantStorage.simulateInsert(ItemVariant.of(stack), stack.getCount(), transaction) :
                     itemVariantStorage.insert(ItemVariant.of(stack), stack.getCount(), transaction);
             if (amountInserted == 0) return stack;
@@ -77,7 +77,7 @@ public class FabricItemStorage implements ItemStorage {
 
     @Override
     public ItemStack extract(Predicate<ItemStack> filter, long amount, boolean simulate) {
-        try (Transaction transaction = Transaction.getCurrentUnsafe().openNested()) {
+        try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             for (StorageView<ItemVariant> view : itemVariantStorage) {
                 ItemVariant resource = view.getResource();
                 if (filter.test(resource.toStack())) {
@@ -93,7 +93,7 @@ public class FabricItemStorage implements ItemStorage {
 
     @Override
     public ItemStack extract(int slot, long amount, boolean simulate) {
-        try (Transaction transaction = Transaction.getCurrentUnsafe().openNested()) {
+        try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             for (StorageView<ItemVariant> view : itemVariantStorage) {
                 ItemVariant resource = view.getResource();
                 if (slot == 0) {
