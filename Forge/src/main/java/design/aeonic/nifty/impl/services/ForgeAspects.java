@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.LazyOptional;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.objectweb.asm.Type;
 
 import javax.annotation.Nullable;
@@ -46,7 +46,7 @@ public class ForgeAspects implements Aspects {
         aspectTypes.put(key, type);
         mappedAspectTypes.put(type, new AspectCapability<>(type, capability, commonToForge, forgeToCommon));
         mappedAspectCapabilities.put(capability, new AspectCapability<>(type, capability, commonToForge, forgeToCommon));
-        registryListeners.remove(key).forEach(c -> c.accept(type));
+        if (registryListeners.containsKey(key)) registryListeners.remove(key).forEach(c -> c.accept(type));
     }
 
     public void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -128,10 +128,10 @@ public class ForgeAspects implements Aspects {
     @Override
     public <T> void registerAspectType(ResourceLocation key, AspectType<T> type) {
         aspectTypes.put(key, type);
-        registryListeners.remove(key).forEach(c -> c.accept(type));
+        if (registryListeners.containsKey(key)) registryListeners.remove(key).forEach(c -> c.accept(type));
     }
 
-    @NotNull
+    @Nonnull
     @Override
     @SuppressWarnings("unchecked")
     public <T> AspectType<T> getAspectType(ResourceLocation key) {

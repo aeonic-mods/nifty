@@ -2,7 +2,7 @@ package design.aeonic.nifty.api.transfer.item;
 
 import design.aeonic.nifty.api.transfer.base.SimpleStorage;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.annotation.Nonnull;
 import java.util.function.Predicate;
@@ -34,13 +34,13 @@ public class SimpleItemStorage extends SimpleStorage<ItemStack> implements ItemS
     }
 
     @Override
-    public final ItemStack insert(int slot, @NotNull ItemStack stack, boolean simulate) {
+    public final ItemStack insert(int slot, @Nonnull ItemStack stack, boolean simulate) {
         var ret = insertInternal(slot, stack.copy(), simulate);
         if (!simulate) onChange();
         return ret;
     }
 
-    protected ItemStack insertInternal(int slot, @NotNull ItemStack stack, boolean simulate) {
+    protected ItemStack insertInternal(int slot, @Nonnull ItemStack stack, boolean simulate) {
         if (stack.isEmpty()) return getEmptyStack();
         var slotStack = getStackInSlot(slot);
 

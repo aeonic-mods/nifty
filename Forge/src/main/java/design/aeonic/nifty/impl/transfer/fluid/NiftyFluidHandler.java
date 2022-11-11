@@ -3,7 +3,7 @@ package design.aeonic.nifty.impl.transfer.fluid;
 import design.aeonic.nifty.api.transfer.fluid.FluidStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class NiftyFluidHandler implements IFluidHandler {
     private final FluidStorage fluidStorage;
@@ -18,7 +18,7 @@ public class NiftyFluidHandler implements IFluidHandler {
     }
 
     @Override
-    public @NotNull FluidStack getFluidInTank(int tank) {
+    public @Nonnull FluidStack getFluidInTank(int tank) {
         return ForgeFluidStorage.toForgeStack(fluidStorage.getStackInSlot(tank));
     }
 
@@ -28,7 +28,7 @@ public class NiftyFluidHandler implements IFluidHandler {
     }
 
     @Override
-    public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
+    public boolean isFluidValid(int tank, @Nonnull FluidStack stack) {
         return fluidStorage.isEverValid(tank, ForgeFluidStorage.fromForgeStack(stack));
     }
 
@@ -39,12 +39,12 @@ public class NiftyFluidHandler implements IFluidHandler {
     }
 
     @Override
-    public @NotNull FluidStack drain(FluidStack resource, FluidAction action) {
+    public @Nonnull FluidStack drain(FluidStack resource, FluidAction action) {
         return ForgeFluidStorage.toForgeStack(fluidStorage.extract(stack -> stack.getFluid() == resource.getFluid() && stack.getTag().equals(resource.getTag()), resource.getAmount(), action.execute()));
     }
 
     @Override
-    public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
+    public @Nonnull FluidStack drain(int maxDrain, FluidAction action) {
         return ForgeFluidStorage.toForgeStack(fluidStorage.extract(stack -> true, maxDrain, action.execute()));
     }
 }

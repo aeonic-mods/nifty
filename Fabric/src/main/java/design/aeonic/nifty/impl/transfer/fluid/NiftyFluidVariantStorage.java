@@ -20,7 +20,7 @@ public class NiftyFluidVariantStorage implements Storage<FluidVariant> {
 
     @Override
     public long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
-        long inserted = fluidStorage.insert(FabricFluidStorage.variantToStack(resource, maxAmount), true).getAmount();
+        long inserted = maxAmount - fluidStorage.insert(FabricFluidStorage.variantToStack(resource, maxAmount), true).getAmount();
         if (inserted > 0) transaction.addCloseCallback((ctx, result) -> {
             if (result.wasCommitted()) fluidStorage.insert(FabricFluidStorage.variantToStack(resource, maxAmount), false);
         });
@@ -83,16 +83,16 @@ public class NiftyFluidVariantStorage implements Storage<FluidVariant> {
     }
 
     private class ViewIterator implements Iterator<StorageView<FluidVariant>> {
-        private final View view = new View(0);
+        private View view = null;
 
         @Override
         public boolean hasNext() {
-            return view.slot < fluidStorage.getSlots();
+            return view == null || view.slot < fluidStorage.getSlots() - 1;
         }
 
         @Override
         public StorageView<FluidVariant> next() {
-            return view.next();
+            return view == null ? view = new View(0) : view.next();
         }
     }
 }

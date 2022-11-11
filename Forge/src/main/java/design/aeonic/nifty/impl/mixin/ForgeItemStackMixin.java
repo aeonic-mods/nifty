@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
@@ -25,7 +25,7 @@ public abstract class ForgeItemStackMixin extends CapabilityProvider<ItemStack> 
     }
 
     @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+    public @Nonnull <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (getItem() instanceof AspectProviderItem item) {
             LazyOptional<T> opt = ((ForgeAspects) Aspects.INSTANCE).getAsCap(item, cap, null);
             if (opt != null) return opt;

@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.fabricmc.fabric.impl.transfer.item.ItemVariantCache;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.function.Predicate;
 
@@ -53,26 +53,25 @@ public class FabricItemStorage implements ItemStorage {
 
     @Override
     public boolean isEverValid(int slot, ItemStack stack) {
-        // TODO: Probably a better way to do this, but whatever. We just skip this check; the performance
-        // hit should be less than what would result from iterating through storage views.
+        // TODO: Probably a better way to do this, but whatever. We just skip this check; the performance hit should be less than what would result from iterating through storage views.
         return true;
     }
 
     @Override
-    public ItemStack insert(int slot, @NotNull ItemStack stack, boolean simulate) {
+    public ItemStack insert(int slot, @Nonnull ItemStack stack, boolean simulate) {
         return insert(stack, simulate);
     }
 
     @Override
-    public ItemStack insert(@NotNull ItemStack stack, boolean simulate) {
-        if (!itemVariantStorage.supportsInsertion()) return stack;
+    public ItemStack insert(@Nonnull ItemStack stack, boolean simulate) {
+        if (stack.isEmpty() || !itemVariantStorage.supportsInsertion()) return stack;
         try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
-            long amountInserted = simulate ? itemVariantStorage.simulateInsert(ItemVariant.of(stack), stack.getCount(), transaction) :
-                    itemVariantStorage.insert(ItemVariant.of(stack), stack.getCount(), transaction);
+            long amountInserted = itemVariantStorage.insert(ItemVariant.of(stack), stack.getCount(), transaction);
             if (amountInserted == 0) return stack;
 
             ItemStack result = stack.copy();
             result.shrink((int) amountInserted);
+            transaction.commit();
             return result;
         }
     }
@@ -84,9 +83,12 @@ public class FabricItemStorage implements ItemStorage {
             for (StorageView<ItemVariant> view : itemVariantStorage) {
                 ItemVariant resource = view.getResource();
                 if (filter.test(resource.toStack())) {
-                    long amountExtracted = simulate ? itemVariantStorage.simulateExtract(resource, amount, transaction) : itemVariantStorage.extract(resource, amount, transaction);
+                    if (resource.isBlank()) return ItemStack.EMPTY;
+
+                    long amountExtracted = itemVariantStorage.extract(resource, amount, transaction);
                     if (amountExtracted == 0) return ItemStack.EMPTY;
 
+                    transaction.commit();
                     return resource.toStack((int) amountExtracted);
                 }
             }
@@ -101,9 +103,12 @@ public class FabricItemStorage implements ItemStorage {
             for (StorageView<ItemVariant> view : itemVariantStorage) {
                 ItemVariant resource = view.getResource();
                 if (slot == 0) {
-                    long amountExtracted = simulate ? itemVariantStorage.simulateExtract(resource, amount, transaction) : itemVariantStorage.extract(resource, amount, transaction);
+                    if (resource.isBlank()) return ItemStack.EMPTY;
+
+                    long amountExtracted = itemVariantStorage.extract(resource, amount, transaction);
                     if (amountExtracted == 0) return ItemStack.EMPTY;
 
+                    transaction.commit();
                     return resource.toStack((int) amountExtracted);
                 }
                 slot--;

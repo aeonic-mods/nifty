@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,15 +28,18 @@ public class FabricAspects implements Aspects {
     private final Map<AspectType<?>, ApiLookup<?>> apiLookups = new HashMap<>();
     private final Map<AspectType<?>, ApiLookup<?>> mappedApiLookups = new HashMap<>();
 
-    public <A, T> void registerMapped(ResourceLocation key, AspectType<A> aspectType, Class<T> apiClass, Function<A, T> commonToFabric, Function<T, A> fabricToCommon) {
+    public <A, T> void registerMapped(ResourceLocation key, AspectType<A> aspectType, Class<T> apiClass, Function<A, T> commonToFabric, Function<T, A> fabricToCommon,
+                                      ResourceLocation blockLookupKey, ResourceLocation entityLookupKey, ResourceLocation itemLookupKey) {
         aspectTypes.put(key, aspectType);
         aspectTypeMappers.put(aspectType, new AspectMapper<>(aspectType, apiClass, commonToFabric, fabricToCommon));
 
-        ApiLookup<T> apiLookup = new ApiLookup<>(key, apiClass);
+        ApiLookup<T> apiLookup = new ApiLookup<>(apiClass, blockLookupKey, entityLookupKey, itemLookupKey);
+        apiLookup.register(aspectType, commonToFabric);
         mappedApiLookups.put(aspectType, apiLookup);
-
-        for (Consumer<AspectType<?>> listener : registryListeners.get(key)) {
-            listener.accept(aspectType);
+        if (registryListeners.containsKey(key)) {
+            for (Consumer<AspectType<?>> listener : registryListeners.removeAll(key)) {
+                listener.accept(aspectType);
+            }
         }
     }
 
@@ -115,7 +118,9 @@ public class FabricAspects implements Aspects {
     @Override
     public <T> void registerAspectType(ResourceLocation key, AspectType<T> type) {
         aspectTypes.put(key, type);
-        apiLookups.put(type, new ApiLookup<>(key, type.getType()));
+        ApiLookup<T> apiLookup = new ApiLookup<>(type.getType(), key);
+        apiLookup.register(type);
+        apiLookups.put(type, apiLookup);
 
         if (registryListeners.containsKey(key)) {
             for (Consumer<AspectType<?>> listener : registryListeners.removeAll(key)) {
@@ -124,7 +129,7 @@ public class FabricAspects implements Aspects {
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
     @SuppressWarnings("unchecked")
     public <T> AspectType<T> getAspectType(ResourceLocation key) {

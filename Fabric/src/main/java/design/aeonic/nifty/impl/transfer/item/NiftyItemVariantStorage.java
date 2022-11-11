@@ -19,7 +19,7 @@ public class NiftyItemVariantStorage implements Storage<ItemVariant> {
     @Override
     public long insert(ItemVariant resource, long maxAmount, TransactionContext transaction) {
         int intAmount = (int) Math.min(maxAmount, Integer.MAX_VALUE);
-        long inserted = itemStorage.insert(resource.toStack(intAmount), true).getCount();
+        long inserted = intAmount - itemStorage.insert(resource.toStack(intAmount), true).getCount();
         if (inserted > 0) transaction.addCloseCallback((ctx, result) -> {
             if (result.wasCommitted()) itemStorage.insert(resource.toStack((int) inserted), false);
         });
@@ -80,16 +80,16 @@ public class NiftyItemVariantStorage implements Storage<ItemVariant> {
     }
 
     private class ViewIterator implements Iterator<StorageView<ItemVariant>> {
-        private final View view = new View(0);
+        private View view = null;
 
         @Override
         public boolean hasNext() {
-            return view.slot < itemStorage.getSlots();
+            return view == null || view.slot < itemStorage.getSlots() - 1;
         }
 
         @Override
         public StorageView<ItemVariant> next() {
-            return view.next();
+            return view == null ? view = new View(0) : view.next();
         }
     }
 }

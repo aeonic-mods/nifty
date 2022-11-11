@@ -4,7 +4,7 @@ import design.aeonic.nifty.api.transfer.fluid.FluidStack;
 import design.aeonic.nifty.api.transfer.fluid.FluidStorage;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.function.Predicate;
 
@@ -36,12 +36,12 @@ public class ForgeFluidStorage implements FluidStorage {
     }
 
     @Override
-    public FluidStack insert(int slot, @NotNull FluidStack stack, boolean simulate) {
+    public FluidStack insert(int slot, @Nonnull FluidStack stack, boolean simulate) {
         return insert(stack, simulate);
     }
 
     @Override
-    public FluidStack insert(@NotNull FluidStack stack, boolean simulate) {
+    public FluidStack insert(@Nonnull FluidStack stack, boolean simulate) {
         FluidStack ret = stack.copy();
         int filledAmount = handler.fill(toForgeStack(stack), simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE);
         ret.shrink(filledAmount);

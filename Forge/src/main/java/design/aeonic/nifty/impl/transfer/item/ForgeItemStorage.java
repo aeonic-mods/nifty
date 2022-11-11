@@ -3,7 +3,7 @@ package design.aeonic.nifty.impl.transfer.item;
 import design.aeonic.nifty.api.transfer.item.ItemStorage;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.annotation.Nonnull;
 import java.util.function.Predicate;
@@ -46,7 +46,7 @@ public class ForgeItemStorage implements ItemStorage {
     }
 
     @Override
-    public ItemStack insert(int slot, @NotNull ItemStack stack, boolean simulate) {
+    public ItemStack insert(int slot, @Nonnull ItemStack stack, boolean simulate) {
         return handler.insertItem(slot, stack, simulate);
     }
 

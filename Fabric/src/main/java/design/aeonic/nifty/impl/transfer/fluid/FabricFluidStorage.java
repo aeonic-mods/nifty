@@ -7,7 +7,8 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.item.ItemStack;
+import javax.annotation.Nonnull;
 
 import java.util.function.Predicate;
 
@@ -58,20 +59,21 @@ public class FabricFluidStorage implements FluidStorage {
     }
 
     @Override
-    public FluidStack insert(int slot, @NotNull FluidStack stack, boolean simulate) {
+    public FluidStack insert(int slot, @Nonnull FluidStack stack, boolean simulate) {
         return insert(stack, simulate);
     }
 
     @Override
-    public FluidStack insert(@NotNull FluidStack stack, boolean simulate) {
-        if (!fluidVariantStorage.supportsInsertion()) return stack;
+    public FluidStack insert(@Nonnull FluidStack stack, boolean simulate) {
+        if (stack.isEmpty() || !fluidVariantStorage.supportsInsertion()) return stack;
         try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
-            long amountInserted = simulate ? fluidVariantStorage.simulateInsert(stackToVariant(stack), stack.getAmount(), transaction) :
-                    fluidVariantStorage.insert(stackToVariant(stack), stack.getAmount(), transaction);
+            long amountInserted =  fluidVariantStorage.insert(stackToVariant(stack), stack.getAmount(), transaction);
             if (amountInserted == 0) return stack;
 
             FluidStack result = stack.copy();
             result.shrink((int) amountInserted);
+
+            transaction.commit();
             return result;
         }
     }
@@ -83,9 +85,12 @@ public class FabricFluidStorage implements FluidStorage {
             for (StorageView<FluidVariant> view : fluidVariantStorage) {
                 FluidVariant resource = view.getResource();
                 if (filter.test(variantToStack(resource, 1))) {
-                    long amountExtracted = simulate ? fluidVariantStorage.simulateExtract(resource, amount, transaction) : fluidVariantStorage.extract(resource, amount, transaction);
+                    if (resource.isBlank()) return FluidStack.EMPTY_STACK;
+
+                    long amountExtracted = fluidVariantStorage.extract(resource, amount, transaction);
                     if (amountExtracted == 0) return FluidStack.EMPTY_STACK;
 
+                    transaction.commit();
                     return variantToStack(resource, amountExtracted);
                 }
             }
@@ -100,9 +105,12 @@ public class FabricFluidStorage implements FluidStorage {
             for (StorageView<FluidVariant> view : fluidVariantStorage) {
                 FluidVariant resource = view.getResource();
                 if (slot == 0) {
-                    long amountExtracted = simulate ? fluidVariantStorage.simulateExtract(resource, amount, transaction) : fluidVariantStorage.extract(resource, amount, transaction);
+                    if (resource.isBlank()) return FluidStack.EMPTY_STACK;
+
+                    long amountExtracted = fluidVariantStorage.extract(resource, amount, transaction);
                     if (amountExtracted == 0) return FluidStack.EMPTY_STACK;
 
+                    transaction.commit();
                     return variantToStack(resource, amountExtracted);
                 }
                 slot--;

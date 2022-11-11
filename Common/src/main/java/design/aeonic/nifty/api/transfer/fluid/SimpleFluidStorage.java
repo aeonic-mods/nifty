@@ -3,7 +3,11 @@ package design.aeonic.nifty.api.transfer.fluid;
 import design.aeonic.nifty.api.transfer.base.SimpleStorage;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
+import javax.annotation.Nonnull;
+
+import javax.annotation.Nonnull;
 
 import java.util.function.Predicate;
 
@@ -24,7 +28,7 @@ public class SimpleFluidStorage extends SimpleStorage<FluidStack> implements Flu
     }
 
     @Override
-    public FluidStack insert(@NotNull FluidStack stack, boolean simulate) {
+    public FluidStack insert(@Nonnull FluidStack stack, boolean simulate) {
         var tempStack = stack.copy();
         for (int i = 0; i < getSlots(); i++) {
             if (tempStack.isEmpty()) return getEmptyStack();
@@ -35,13 +39,13 @@ public class SimpleFluidStorage extends SimpleStorage<FluidStack> implements Flu
     }
 
     @Override
-    public FluidStack insert(int slot, @NotNull FluidStack stack, boolean simulate) {
+    public FluidStack insert(int slot, @Nonnull FluidStack stack, boolean simulate) {
         var ret = insertInternal(slot, stack.copy(), simulate);
         if (!simulate) onChange();
         return ret;
     }
 
-    protected FluidStack insertInternal(int slot, @NotNull FluidStack stack, boolean simulate) {
+    protected FluidStack insertInternal(int slot, @Nonnull FluidStack stack, boolean simulate) {
         if (stack.isEmpty()) return getEmptyStack();
         var slotStack = getStackInSlot(slot);
 

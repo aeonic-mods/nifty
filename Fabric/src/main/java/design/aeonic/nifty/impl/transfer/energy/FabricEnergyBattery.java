@@ -27,8 +27,7 @@ public class FabricEnergyBattery implements EnergyBattery {
         if (!energyStorage.supportsInsertion()) return 0L;
         try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             long inserted = energyStorage.insert(amount, transaction);
-            if (simulate) transaction.abort();
-            else transaction.commit();
+            if (!simulate) transaction.commit();
             return inserted;
         }
     }
@@ -38,8 +37,7 @@ public class FabricEnergyBattery implements EnergyBattery {
         if (!energyStorage.supportsExtraction()) return 0L;
         try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             long extracted = energyStorage.extract(amount, transaction);
-            if (simulate) transaction.abort();
-            else transaction.commit();
+            if (!simulate) transaction.commit();
             return extracted;
         }
     }
