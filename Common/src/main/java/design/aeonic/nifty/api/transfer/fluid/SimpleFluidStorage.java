@@ -30,12 +30,15 @@ public class SimpleFluidStorage extends SimpleStorage<FluidStack> implements Flu
             if (tempStack.isEmpty()) return getEmptyStack();
             insertInternal(i, tempStack, simulate);
         }
+        if (!simulate) onChange();
         return tempStack;
     }
 
     @Override
     public FluidStack insert(int slot, @NotNull FluidStack stack, boolean simulate) {
-        return insertInternal(slot, stack.copy(), simulate);
+        var ret = insertInternal(slot, stack.copy(), simulate);
+        if (!simulate) onChange();
+        return ret;
     }
 
     protected FluidStack insertInternal(int slot, @NotNull FluidStack stack, boolean simulate) {
@@ -68,6 +71,7 @@ public class SimpleFluidStorage extends SimpleStorage<FluidStack> implements Flu
                 }
             }
         }
+        if (!simulate) onChange();
         return ret == null ? getEmptyStack() : ret;
     }
 
@@ -77,6 +81,7 @@ public class SimpleFluidStorage extends SimpleStorage<FluidStack> implements Flu
         if (stack.isEmpty()) return getEmptyStack();
         if (amount > stack.getAmount()) amount = stack.getAmount();
 
+        if (!simulate) onChange();
         return stack.split(amount);
     }
 }

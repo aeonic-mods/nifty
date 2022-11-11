@@ -54,16 +54,27 @@ public abstract class SimpleBattery<T extends Number & Comparable<T>> implements
     @Override
     public T insert(T amount, boolean simulate) {
         T maxInsert = min(amount, subtract(capacity, stored));
-        if (!simulate) stored = add(stored, maxInsert);
+        if (!simulate) {
+            stored = add(stored, maxInsert);
+            onChange();
+        }
         return maxInsert;
     }
 
     @Override
     public T extract(T amount, boolean simulate) {
         T maxExtract = min(amount, stored);
-        if (!simulate) stored = subtract(stored, maxExtract);
+        if (!simulate) {
+            stored = subtract(stored, maxExtract);
+            onChange();
+        }
         return maxExtract;
     }
+
+    /**
+     * Called when the battery's stored value changes, override to mark your provider as dirty.
+     */
+    public void onChange() {}
 
     public static class IntBattery extends SimpleBattery<Integer> {
         public IntBattery(int capacity) {

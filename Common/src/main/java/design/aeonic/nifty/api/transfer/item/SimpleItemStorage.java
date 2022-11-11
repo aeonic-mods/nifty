@@ -29,12 +29,15 @@ public class SimpleItemStorage extends SimpleStorage<ItemStack> implements ItemS
             if (tempStack.isEmpty()) return getEmptyStack();
             insertInternal(i, tempStack, simulate);
         }
+        if (!simulate) onChange();
         return tempStack;
     }
 
     @Override
     public final ItemStack insert(int slot, @NotNull ItemStack stack, boolean simulate) {
-        return insertInternal(slot, stack.copy(), simulate);
+        var ret = insertInternal(slot, stack.copy(), simulate);
+        if (!simulate) onChange();
+        return ret;
     }
 
     protected ItemStack insertInternal(int slot, @NotNull ItemStack stack, boolean simulate) {
@@ -67,6 +70,7 @@ public class SimpleItemStorage extends SimpleStorage<ItemStack> implements ItemS
                 }
             }
         }
+        if (!simulate) onChange();
         return ret == null ? getEmptyStack() : ret;
     }
 
@@ -76,6 +80,7 @@ public class SimpleItemStorage extends SimpleStorage<ItemStack> implements ItemS
         if (stack.isEmpty()) return getEmptyStack();
         if (amount > stack.getCount()) amount = stack.getCount();
 
+        if (!simulate) onChange();
         return stack.split((int) amount);
     }
 

@@ -41,4 +41,9 @@ public abstract class SimpleStorage<T> implements Storage<T> {
             contents.set(i, temp[i]);
         }
     }
+
+    /**
+     * Called when the handler's contents changed; override to mark your provider as dirty.
+     */
+    public void onChange() {}
 }
