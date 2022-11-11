@@ -24,6 +24,7 @@ public class FabricEnergyBattery implements EnergyBattery {
 
     @Override
     public Long insert(Long amount, boolean simulate) {
+        if (!energyStorage.supportsInsertion()) return 0L;
         try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             long inserted = energyStorage.insert(amount, transaction);
             if (simulate) transaction.abort();
@@ -34,6 +35,7 @@ public class FabricEnergyBattery implements EnergyBattery {
 
     @Override
     public Long extract(Long amount, boolean simulate) {
+        if (!energyStorage.supportsExtraction()) return 0L;
         try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             long extracted = energyStorage.extract(amount, transaction);
             if (simulate) transaction.abort();

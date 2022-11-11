@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
+import net.fabricmc.fabric.impl.transfer.item.ItemVariantCache;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -64,6 +65,7 @@ public class FabricItemStorage implements ItemStorage {
 
     @Override
     public ItemStack insert(@NotNull ItemStack stack, boolean simulate) {
+        if (!itemVariantStorage.supportsInsertion()) return stack;
         try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             long amountInserted = simulate ? itemVariantStorage.simulateInsert(ItemVariant.of(stack), stack.getCount(), transaction) :
                     itemVariantStorage.insert(ItemVariant.of(stack), stack.getCount(), transaction);
@@ -77,6 +79,7 @@ public class FabricItemStorage implements ItemStorage {
 
     @Override
     public ItemStack extract(Predicate<ItemStack> filter, long amount, boolean simulate) {
+        if (!itemVariantStorage.supportsExtraction()) return ItemStack.EMPTY;
         try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             for (StorageView<ItemVariant> view : itemVariantStorage) {
                 ItemVariant resource = view.getResource();
@@ -93,6 +96,7 @@ public class FabricItemStorage implements ItemStorage {
 
     @Override
     public ItemStack extract(int slot, long amount, boolean simulate) {
+        if (!itemVariantStorage.supportsExtraction()) return ItemStack.EMPTY;
         try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             for (StorageView<ItemVariant> view : itemVariantStorage) {
                 ItemVariant resource = view.getResource();

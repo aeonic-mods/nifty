@@ -64,6 +64,7 @@ public class FabricFluidStorage implements FluidStorage {
 
     @Override
     public FluidStack insert(@NotNull FluidStack stack, boolean simulate) {
+        if (!fluidVariantStorage.supportsInsertion()) return stack;
         try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             long amountInserted = simulate ? fluidVariantStorage.simulateInsert(stackToVariant(stack), stack.getAmount(), transaction) :
                     fluidVariantStorage.insert(stackToVariant(stack), stack.getAmount(), transaction);
@@ -77,6 +78,7 @@ public class FabricFluidStorage implements FluidStorage {
 
     @Override
     public FluidStack extract(Predicate<FluidStack> filter, long amount, boolean simulate) {
+        if (!fluidVariantStorage.supportsExtraction()) return FluidStack.EMPTY_STACK;
         try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             for (StorageView<FluidVariant> view : fluidVariantStorage) {
                 FluidVariant resource = view.getResource();
@@ -93,6 +95,7 @@ public class FabricFluidStorage implements FluidStorage {
 
     @Override
     public FluidStack extract(int slot, long amount, boolean simulate) {
+        if (!fluidVariantStorage.supportsExtraction()) return FluidStack.EMPTY_STACK;
         try (Transaction transaction = Transaction.openNested(Transaction.getCurrentUnsafe())) {
             for (StorageView<FluidVariant> view : fluidVariantStorage) {
                 FluidVariant resource = view.getResource();
