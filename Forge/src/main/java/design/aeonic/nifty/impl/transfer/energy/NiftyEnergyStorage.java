@@ -3,10 +3,10 @@ package design.aeonic.nifty.impl.transfer.energy;
 import design.aeonic.nifty.api.transfer.energy.EnergyBattery;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class BatteryEnergyStorage implements IEnergyStorage {
+public class NiftyEnergyStorage implements IEnergyStorage {
     private final EnergyBattery battery;
 
-    public BatteryEnergyStorage(EnergyBattery battery) {
+    public NiftyEnergyStorage(EnergyBattery battery) {
         this.battery = battery;
     }
 

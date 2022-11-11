@@ -5,10 +5,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class StorageItemHandler implements IItemHandler {
+public class NiftyItemHandler implements IItemHandler {
     private final ItemStorage itemStorage;
 
-    public StorageItemHandler(ItemStorage itemStorage) {
+    public NiftyItemHandler(ItemStorage itemStorage) {
         this.itemStorage = itemStorage;
     }
 

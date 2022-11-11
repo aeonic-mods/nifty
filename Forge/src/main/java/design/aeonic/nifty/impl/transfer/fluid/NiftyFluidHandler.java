@@ -5,10 +5,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class StorageFluidHandler implements IFluidHandler {
+public class NiftyFluidHandler implements IFluidHandler {
     private final FluidStorage fluidStorage;
 
-    public StorageFluidHandler(FluidStorage fluidStorage) {
+    public NiftyFluidHandler(FluidStorage fluidStorage) {
         this.fluidStorage = fluidStorage;
     }
 
