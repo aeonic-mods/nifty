@@ -1,4 +1,4 @@
-package design.aeonic.nifty.impl.services;
+package design.aeonic.nifty.impl.aspect;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.BiMap;

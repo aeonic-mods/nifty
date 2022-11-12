@@ -1,4 +1,4 @@
-package design.aeonic.nifty.impl.services;
+package design.aeonic.nifty.impl.aspect;
 
 import design.aeonic.nifty.api.aspect.*;
 import design.aeonic.nifty.api.aspect.Aspects;

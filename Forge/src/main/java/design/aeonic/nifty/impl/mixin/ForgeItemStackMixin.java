@@ -2,7 +2,7 @@ package design.aeonic.nifty.impl.mixin;
 
 import design.aeonic.nifty.api.aspect.AspectProviderItem;
 import design.aeonic.nifty.api.aspect.Aspects;
-import design.aeonic.nifty.impl.services.ForgeAspects;
+import design.aeonic.nifty.impl.aspect.ForgeAspects;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

@@ -4,7 +4,7 @@ import design.aeonic.nifty.api.core.Constants;
 import design.aeonic.nifty.api.aspect.Aspects;
 import design.aeonic.nifty.api.transfer.Transfer;
 import design.aeonic.nifty.api.util.Registrar;
-import design.aeonic.nifty.impl.services.FabricAspects;
+import design.aeonic.nifty.impl.aspect.FabricAspects;
 import design.aeonic.nifty.impl.transfer.energy.FabricEnergyBattery;
 import design.aeonic.nifty.impl.transfer.energy.NiftyEnergyStorage;
 import design.aeonic.nifty.impl.transfer.fluid.FabricFluidStorage;
