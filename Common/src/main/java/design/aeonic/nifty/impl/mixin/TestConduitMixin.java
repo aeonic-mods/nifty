@@ -1,7 +1,7 @@
 package design.aeonic.nifty.impl.mixin;
 
 import design.aeonic.nifty.api.aspect.Aspect;
-import design.aeonic.nifty.api.services.Aspects;
+import design.aeonic.nifty.api.aspect.Aspects;
 import design.aeonic.nifty.api.transfer.Transfer;
 import design.aeonic.nifty.api.transfer.item.ItemStorage;
 import net.minecraft.core.BlockPos;

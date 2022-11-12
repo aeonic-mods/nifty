@@ -1,7 +1,7 @@
 package design.aeonic.nifty.impl.services;
 
 import design.aeonic.nifty.api.aspect.*;
-import design.aeonic.nifty.api.services.Aspects;
+import design.aeonic.nifty.api.aspect.Aspects;
 import design.aeonic.nifty.impl.aspect.ForgeAspect;
 import design.aeonic.nifty.impl.mixin.access.CapabilityManagerAccess;
 import net.minecraft.core.BlockPos;

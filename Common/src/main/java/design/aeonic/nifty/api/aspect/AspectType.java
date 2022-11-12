@@ -1,6 +1,5 @@
 package design.aeonic.nifty.api.aspect;
 
-import design.aeonic.nifty.api.services.Aspects;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;

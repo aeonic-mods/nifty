@@ -1,7 +1,5 @@
-package design.aeonic.nifty.api.services;
+package design.aeonic.nifty.api.aspect;
 
-import design.aeonic.nifty.api.aspect.Aspect;
-import design.aeonic.nifty.api.aspect.AspectType;
 import design.aeonic.nifty.api.core.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

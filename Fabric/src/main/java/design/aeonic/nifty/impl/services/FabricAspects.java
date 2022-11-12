@@ -5,7 +5,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Multimap;
 import design.aeonic.nifty.api.aspect.*;
-import design.aeonic.nifty.api.services.Aspects;
+import design.aeonic.nifty.api.aspect.Aspects;
 import design.aeonic.nifty.impl.aspect.ApiLookup;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

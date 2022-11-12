@@ -1,7 +1,7 @@
 package design.aeonic.nifty.impl.mixin;
 
 import design.aeonic.nifty.api.aspect.AspectProviderEntity;
-import design.aeonic.nifty.api.services.Aspects;
+import design.aeonic.nifty.api.aspect.Aspects;
 import design.aeonic.nifty.impl.services.ForgeAspects;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
