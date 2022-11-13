@@ -4,6 +4,7 @@
   "package": "design.aeonic.nifty.impl.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "TestChestMixin",
     "TestConduitMixin",
     "TestSignMixin"
   ],
@@ -11,6 +12,6 @@
   ],
   "injectors": {
     "defaultRequire": 1
-  }
-  }
-  
+  },
+  "refmap": "nifty.refmap.json"
+}
