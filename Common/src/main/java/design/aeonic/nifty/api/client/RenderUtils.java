@@ -3,8 +3,6 @@ package design.aeonic.nifty.api.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
-import design.aeonic.nifty.api.client.screen.LineSet;
-import design.aeonic.nifty.api.util.Texture;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
