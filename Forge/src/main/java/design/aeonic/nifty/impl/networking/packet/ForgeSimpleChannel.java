@@ -32,34 +32,51 @@ public class ForgeSimpleChannel extends SimpleChannelImpl {
 
     @Override
     public <T> PacketHandler<T> registerPacket(String id, Class<T> packetClass, BiConsumer<T, ExtraFriendlyByteBuf> serializer, Function<ExtraFriendlyByteBuf, T> deserializer) {
-        PacketHandler<T> ret = new ForgePacketHandler<>(this, )
-        forgeChannel.registerMessage(++counter, packetClass,
-                ExtraFriendlyByteBuf.encoder(serializer),
-                ExtraFriendlyByteBuf.decoder(deserializer), this::receive);
-        return ret;
+        PacketHandlerImpl<T> handler = (PacketHandlerImpl<T>) super.registerPacket(id, packetClass, serializer, deserializer);
+        forgeChannel.registerMessage(++counter, packetClass, (packet, buf) -> {
+            writeProtocolVersion(buf);
+            buf.writeUtf(id);
+            handler.serialize(packet, ExtraFriendlyByteBuf.of(buf));
+        }, buf -> {
+            checkProtocolVersion(buf);
+            String packetId = buf.readUtf();
+            if (!packetId.equals(id)) throw new IllegalArgumentException("Packet id mismatch: expected " + id + ", got " + packetId);
+            return handler.deserialize(ExtraFriendlyByteBuf.of(buf));
+        }, (packet, ctx) -> {
+            NetworkEvent.Context context = ctx.get();
+            if (context.getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
+                handler.getClientCallback().handle(context::enqueueWork, Minecraft.getInstance(), packet);
+                context.setPacketHandled(true);
+            } else {
+                handler.getServerCallback().handle(context::enqueueWork, Objects.requireNonNull(context.getSender()).server, context.getSender(), packet);
+                context.setPacketHandled(true);
+            }
+        });
+
+        return handler;
     }
 
-    @SuppressWarnings({"unchecked"})
-    <T> void receive(ForgePacketContext<T> packet, Supplier<NetworkEvent.Context> ctx) {
-        // Forge checks protocol versions for us
-        if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
-            PacketHandlerImpl<T> handler = (PacketHandlerImpl<T>) packetHandlers.get(packet.getId());
-            if (handler == null) throw new IllegalArgumentException("No packet handler registered for id " + packet.getId());
-            handler.getClientCallback().handle(ctx.get()::enqueueWork, Minecraft.getInstance(), packet.getPacket());
-        } else {
-            PacketHandlerImpl<T> handler = (PacketHandlerImpl<T>) packetHandlers.get(packet.getId());
-            if (handler == null) throw new IllegalArgumentException("No packet handler registered for id " + packet.getId());
-            handler.getServerCallback().handle(ctx.get()::enqueueWork, Objects.requireNonNull(ctx.get().getSender()).server, ctx.get().getSender(), packet.getPacket());
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> void sendToServer(String id, T packet) {
+        PacketHandler<T> handler = (PacketHandler<T>) packetHandlers.get(id);
+        if (handler == null) throw new IllegalArgumentException("No packet handler registered for id " + id);
+        forgeChannel.sendToServer(packet);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> void sendToClients(String id, T packet, ServerPlayer... players) {
+        PacketHandler<T> handler = (PacketHandler<T>) packetHandlers.get(id);
+        if (handler == null) throw new IllegalArgumentException("No packet handler registered for id " + id);
+        for (ServerPlayer player : players) {
+            forgeChannel.sendTo(packet, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 
     @Override
-    protected <T> void sendToServer(String id, PacketHandler<T> handler, Consumer<ExtraFriendlyByteBuf> writer) {
-//        forgeChannel.sendToServer(new ForgePacketContext<>(id, handler.getPacketClass().cast(writer)));
-    }
+    protected <T> void sendToServer(String id, PacketHandler<T> handler, Consumer<ExtraFriendlyByteBuf> writer) {}
 
     @Override
-    protected <T> void sendToClients(String id, PacketHandler<T> handler, Consumer<ExtraFriendlyByteBuf> writer, ServerPlayer... players) {
-
-    }
+    protected <T> void sendToClients(String id, PacketHandler<T> handler, Consumer<ExtraFriendlyByteBuf> writer, ServerPlayer... players) {}
 }

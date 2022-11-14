@@ -22,16 +22,20 @@ import net.minecraftforge.registries.RegisterEvent;
 
 @Mod(Constants.MOD_ID)
 public class ForgeNifty {
-    
+
     public ForgeNifty() {
         Nifty.init();
+
+        // Client init
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener((FMLClientSetupEvent event) -> {
             ClientNifty.clientInit(event::enqueueWork);
         });
 
+        // Other events
         modBus.addListener(((ForgeAspects) Aspects.INSTANCE)::registerCapabilities);
 
+        // Nifty registries
         ForgeAspects aspects = (ForgeAspects) Aspects.INSTANCE;
         aspects.registerMapped(Transfer.ITEM, Transfer.ITEM_ASPECT, ForgeCapabilities.ITEM_HANDLER, NiftyItemHandler::new, ForgeItemStorage::new);
         aspects.registerMapped(Transfer.FLUID, Transfer.FLUID_ASPECT, ForgeCapabilities.FLUID_HANDLER, NiftyFluidHandler::new, ForgeFluidStorage::new);
