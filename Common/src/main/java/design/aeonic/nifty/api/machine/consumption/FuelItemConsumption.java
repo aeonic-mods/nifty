@@ -11,14 +11,15 @@ import java.util.function.Supplier;
 /**
  * Consumes fuel items, furnace style.
  */
-public class FuelItemConsumption implements MachineConsumption {
+public class FuelItemConsumption extends BaseMachineConsumption {
     private final Supplier<ItemStorage> itemHandler;
     private final int slot;
 
     private int litTime = 0;
     private int litDuration = 0;
 
-    public FuelItemConsumption(Supplier<ItemStorage> itemHandler, int slot) {
+    public FuelItemConsumption(Supplier<ItemStorage> itemHandler, int slot, Runnable onSetChanged) {
+        super(onSetChanged);
         this.itemHandler = itemHandler;
         this.slot = slot;
     }
@@ -49,6 +50,7 @@ public class FuelItemConsumption implements MachineConsumption {
             litDuration = Services.ACCESS.getBurnTime(stack);
             litTime = litDuration;
         }
+        setChanged();
     }
 
     @Override

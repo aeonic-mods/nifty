@@ -9,11 +9,12 @@ import java.util.function.Supplier;
 /**
  * Consumes a mutable amount of energy per tick.
  */
-public class EnergyConsumption implements MachineConsumption {
+public class EnergyConsumption extends BaseMachineConsumption {
     private final Supplier<EnergyBattery> battery;
     private long energyPerTick;
 
-    public EnergyConsumption(Supplier<EnergyBattery> battery, long energyPerTick) {
+    public EnergyConsumption(Supplier<EnergyBattery> battery, long energyPerTick, Runnable onSetChanged) {
+        super(onSetChanged);
         this.battery = battery;
         this.energyPerTick = energyPerTick;
     }
@@ -34,6 +35,7 @@ public class EnergyConsumption implements MachineConsumption {
     @Override
     public void run() {
         battery.get().extract(energyPerTick, false);
+        setChanged();
     }
 
     @Override
