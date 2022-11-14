@@ -1,4 +1,18 @@
 {
   "gui.nifty.generic.power_units.forge": "RF",
-  "gui.nifty.generic.power_units.fabric": "\u26A1"
+  "gui.nifty.generic.power_units.fabric": "\u26A1",
+  "gui.nifty.generic.redstone_control": "Redstone Control",
+
+  "gui.nifty.side.up": "Up",
+  "gui.nifty.side.down": "Down",
+  "gui.nifty.side.north": "North",
+  "gui.nifty.side.south": "South",
+  "gui.nifty.side.east": "East",
+  "gui.nifty.side.west": "West",
+
+  "gui.nifty.redstone_control.always": "Always active",
+  "gui.nifty.redstone_control.high": "Active with signal",
+  "gui.nifty.redstone_control.low": "Active without signal",
+  "gui.nifty.redstone_control.never": "Never active",
+  "gui.nifty.redstone_control.pulse": "Run on pulse"
 }

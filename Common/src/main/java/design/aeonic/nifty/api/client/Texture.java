@@ -1,4 +1,4 @@
-package design.aeonic.nifty.api.util;
+package design.aeonic.nifty.api.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
