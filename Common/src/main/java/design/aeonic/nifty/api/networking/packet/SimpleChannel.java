@@ -18,14 +18,16 @@ public interface SimpleChannel {
     String getProtocolVersion();
 
     /**
-     * Sends a packet to the server. If the packet has not yet been registered within this channel, throws an exception.
+     * Sends a packet to the server. If the packet has not yet been registered within this channel,
+     * or if it is registered for the wrong logical side, throws an exception.
      * @param id the packet's id
      * @param packet the packet to send
      */
     <T> void sendToServer(String id, T packet);
 
     /**
-     * Sends a packet to the specified clients. If the packet has not yet been registered within this channel, throws an exception.
+     * Sends a packet to the specified clients. If the packet has not yet been registered within this channel,
+     * or if it is registered for the wrong logical side, throws an exception.
      * @param id the packet's id
      * @param packet the packet to send
      * @param players the clients to send the packet to

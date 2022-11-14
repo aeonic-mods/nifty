@@ -3,7 +3,6 @@ package design.aeonic.nifty.impl.networking.packet;
 import design.aeonic.nifty.api.networking.packet.ExtraFriendlyByteBuf;
 import design.aeonic.nifty.api.networking.packet.PacketHandler;
 import design.aeonic.nifty.api.networking.packet.SimpleChannel;
-import io.netty.buffer.Unpooled;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -36,10 +35,11 @@ public abstract class SimpleChannelImpl implements SimpleChannel {
 
     @Override
     @SuppressWarnings("unchecked")
-    public final <T> void sendToServer(String id, T packet) {
+    public <T> void sendToServer(String id, T packet) {
         PacketHandler<T> handler = (PacketHandler<T>) packetHandlers.get(id);
         if (handler == null) throw new IllegalArgumentException("No packet handler registered for id " + id);
 
+        // TODO: Remove these helpers, they're only used on Fabric
         sendToServer(id, handler, buffer -> {
             writeProtocolVersion(buffer);
             buffer.writeUtf(id);
@@ -49,7 +49,7 @@ public abstract class SimpleChannelImpl implements SimpleChannel {
 
     @Override
     @SuppressWarnings("unchecked")
-    public final <T> void sendToClients(String id, T packet, ServerPlayer... players) {
+    public <T> void sendToClients(String id, T packet, ServerPlayer... players) {
         PacketHandler<T> handler = (PacketHandler<T>) packetHandlers.get(id);
         if (handler == null) throw new IllegalArgumentException("No packet handler registered for id " + id);
 
