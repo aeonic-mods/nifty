@@ -4,9 +4,6 @@
   "package": "design.aeonic.nifty.impl.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "TestChestMixin",
-    "TestConduitMixin",
-    "TestSignMixin"
   ],
   "client": [
   ],
