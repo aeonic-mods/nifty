@@ -5,8 +5,9 @@ on:
       - main
     paths:
       - '.github/workflows/**'
-      - 'src/**'
       - 'build.gradle'
+      - '*/src/**'
+      - '*/build.gradle'
 
 jobs:
   Gradle-Build:
