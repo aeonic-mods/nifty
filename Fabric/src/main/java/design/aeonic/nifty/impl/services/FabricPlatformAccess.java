@@ -4,6 +4,7 @@ import design.aeonic.nifty.api.services.PlatformAccess;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderType;
@@ -42,5 +43,10 @@ public class FabricPlatformAccess implements PlatformAccess {
     @Override
     public CreativeModeTab registerCreativeTab(ResourceLocation id, Supplier<ItemStack> icon) {
         return FabricItemGroupBuilder.create(id).icon(icon).build();
+    }
+
+    @Override
+    public int getBurnTime(ItemStack stack) {
+        return FuelRegistry.INSTANCE.get(stack.getItem());
     }
 }

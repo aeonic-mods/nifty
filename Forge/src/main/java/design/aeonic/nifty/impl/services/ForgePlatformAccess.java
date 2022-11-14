@@ -10,6 +10,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -45,5 +46,10 @@ public class ForgePlatformAccess implements PlatformAccess {
                 return icon.get();
             }
         };
+    }
+
+    @Override
+    public int getBurnTime(ItemStack stack) {
+        return stack.getBurnTime(RecipeType.SMELTING);
     }
 }

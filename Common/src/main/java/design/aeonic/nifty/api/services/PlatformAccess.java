@@ -31,6 +31,11 @@ public interface PlatformAccess {
 
     CreativeModeTab registerCreativeTab(ResourceLocation id, Supplier<ItemStack> icon);
 
+    /**
+     * Gets the burn time of a given item stack, or 0 if it is not a fuel.
+     */
+    int getBurnTime(ItemStack stack);
+
     @FunctionalInterface
     interface MenuSupplier<T extends AbstractContainerMenu> {
         T create(int syncId, Inventory playerInvenory);
