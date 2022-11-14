@@ -12,6 +12,11 @@ public class ForgePlatformInfo implements PlatformInfo {
     }
 
     @Override
+    public Side getPhysicalSide() {
+        return FMLLoader.getDist().isClient() ? Side.CLIENT : Side.SERVER;
+    }
+
+    @Override
     public boolean isModLoaded(String modId) {
 
         return ModList.get().isLoaded(modId);

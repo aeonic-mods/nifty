@@ -23,6 +23,11 @@ public interface PlatformInfo {
     Platform getPlatform();
 
     /**
+     * Gets the physical side.
+     */
+    Side getPhysicalSide();
+
+    /**
      * Checks if a mod with the given id is loaded.
      *
      * @param modId The mod to check if it is loaded.
@@ -54,6 +59,27 @@ public interface PlatformInfo {
 
         public boolean isForge() {
             return this == FORGE;
+        }
+    }
+
+    enum Side {
+        CLIENT,
+        SERVER;
+
+        public void ifClient(Runnable runnable) {
+            if (isClient()) runnable.run();
+        }
+
+        public void ifServer(Runnable runnable) {
+            if (isServer()) runnable.run();
+        }
+
+        public boolean isClient() {
+            return this == CLIENT;
+        }
+
+        public boolean isServer() {
+            return this == SERVER;
         }
     }
 }
