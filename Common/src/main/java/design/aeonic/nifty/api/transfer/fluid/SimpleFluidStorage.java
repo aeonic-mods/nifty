@@ -2,6 +2,7 @@ package design.aeonic.nifty.api.transfer.fluid;
 
 import design.aeonic.nifty.api.transfer.base.SimpleStorage;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.nbt.CompoundTag;
 
 import javax.annotation.Nonnull;
 import java.util.function.Predicate;
@@ -82,5 +83,38 @@ public class SimpleFluidStorage extends SimpleStorage<FluidStack> implements Flu
 
         if (!simulate) onChange();
         return stack.split(amount);
+    }
+
+    public CompoundTag serialize() {
+        CompoundTag tag = new CompoundTag();
+        serializeTo(tag);
+        return tag;
+    }
+
+    public void serializeTo(CompoundTag tag, String key) {
+        CompoundTag myTag = tag.getCompound(key);
+        serializeTo(myTag);
+        tag.put(key, myTag);
+    }
+
+    public void serializeTo(CompoundTag tag) {
+        for (int i = 0; i < getSlots(); i++) {
+            var stack = getStackInSlot(i);
+            if (!stack.isEmpty()) {
+                tag.put(String.valueOf(i), stack.toNbt());
+            }
+        }
+    }
+
+    public void deserialize(CompoundTag tag, String key) {
+        deserialize(tag.getCompound(key));
+    }
+
+    public void deserialize(CompoundTag tag) {
+        for (int i = 0; i < getSlots(); i++) {
+            if (tag.contains(String.valueOf(i))) {
+                set(i, FluidStack.fromNbt(tag.getCompound(String.valueOf(i))));
+            }
+        }
     }
 }

@@ -1,6 +1,8 @@
 package design.aeonic.nifty.api.transfer.item;
 
 import design.aeonic.nifty.api.transfer.base.SimpleStorage;
+import design.aeonic.nifty.api.transfer.fluid.FluidStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -86,5 +88,40 @@ public class SimpleItemStorage extends SimpleStorage<ItemStack> implements ItemS
     private boolean canStack(ItemStack first, ItemStack second) {
         if (first.hasTag() != second.hasTag()) return false;
         return first.sameItem(second) && ItemStack.tagMatches(first, second);
+    }
+
+    public CompoundTag serialize() {
+        CompoundTag tag = new CompoundTag();
+        serializeTo(tag);
+        return tag;
+    }
+
+    public void serializeTo(CompoundTag tag, String key) {
+        CompoundTag myTag = tag.getCompound(key);
+        serializeTo(myTag);
+        tag.put(key, myTag);
+    }
+
+    public void serializeTo(CompoundTag tag) {
+        for (int i = 0; i < getSlots(); i++) {
+            var stack = getStackInSlot(i);
+            if (!stack.isEmpty()) {
+                CompoundTag stackTag = new CompoundTag();
+                stack.save(stackTag);
+                tag.put(String.valueOf(i), stackTag);
+            }
+        }
+    }
+
+    public void deserialize(CompoundTag tag, String key) {
+        deserialize(tag.getCompound(key));
+    }
+
+    public void deserialize(CompoundTag tag) {
+        for (int i = 0; i < getSlots(); i++) {
+            if (tag.contains(String.valueOf(i))) {
+                set(i, ItemStack.of(tag.getCompound(String.valueOf(i))));
+            }
+        }
     }
 }
