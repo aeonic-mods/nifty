@@ -1,7 +1,6 @@
 package design.aeonic.nifty.api.networking.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.function.BiConsumer;
@@ -34,23 +33,13 @@ public interface SimpleChannel {
     <T> void sendToClients(String id, T packet, ServerPlayer... players);
 
     /**
-     * Registers a server-side packet handler for the given packet type.
-     * @param id the packet's ID, unique within the channel
+     * Creates and registers a packet handler, returning the handler object for you to register server- and client-side
+     * packet receive callbacks.
+     * @param id the packet's id, unique to this channel
      * @param packetClass the packet's class
-     * @param encoder the packet encoder
-     * @param decoder the packet decoder
-     * @param handler the handler
+     * @param serializer a function that serializes the packet to a {@link FriendlyByteBuf}
+     * @param deserializer a function that deserializes the packet from a {@link FriendlyByteBuf}
      */
-    <T> void registerServerPacketListener(String id, Class<T> packetClass, BiConsumer<FriendlyByteBuf, T> encoder, Function<FriendlyByteBuf, T> decoder, ServerPacketHandler<T> handler);
-
-    /**
-     * Registers a client-side packet handler for the given packet type.
-     * @param id the packet's ID, unique within the channel
-     * @param packetClass the packet's class
-     * @param encoder the packet encoder
-     * @param decoder the packet decoder
-     * @param handler the handler
-     */
-    <T> void registerClientPacketListener(String id, Class<T> packetClass, BiConsumer<FriendlyByteBuf, T> encoder, Function<FriendlyByteBuf, T> decoder, ClientPacketHandler<T> handler);
+    <T> PacketHandler<T> registerPacket(String id, Class<T> packetClass, BiConsumer<T, ExtraFriendlyByteBuf> serializer, Function<ExtraFriendlyByteBuf, T> deserializer);
 
 }

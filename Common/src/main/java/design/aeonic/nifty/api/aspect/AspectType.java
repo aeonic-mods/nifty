@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 /**
  * Defines a type of {@link Aspect} that might be provided by an {@link AspectProvider}.
  * Used for type-safe access to aspects, and for lookup registration on Fabric.
- * This is the object that's actually registered, via {@link Aspects#registerAspectType(AspectType)}.<br><br>
+ * This is the object that's actually registered, via {@link Aspects#registerAspectType(ResourceLocation, AspectType)} (AspectType)}.<br><br>
  *
  * Other mods can use an AspectType for soft dependencies; calling {@link Aspects#getAspectType(ResourceLocation)}
  * will return the aspect you've registered if it exists, or an empty type that will do nothing in most
