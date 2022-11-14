@@ -1,9 +1,11 @@
+package design.aeonic.nifty.api.client.screen;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import InputWidget;
-import WidgetScreen;
 import design.aeonic.nifty.api.client.RenderUtils;
-import design.aeonic.nifty.api.util.Texture;
+import design.aeonic.nifty.api.client.Texture;
+import design.aeonic.nifty.api.client.screen.input.InputWidget;
+import design.aeonic.nifty.api.client.screen.input.WidgetScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
