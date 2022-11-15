@@ -2,14 +2,14 @@ package design.aeonic.nifty.api.client.screen.input.widgets;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import design.aeonic.nifty.api.client.Texture;
-import design.aeonic.nifty.api.client.screen.input.AbstractInputWidget;
-import design.aeonic.nifty.api.client.screen.input.WidgetScreen;
+import design.aeonic.nifty.api.client.screen.input.AbstractGizmo;
+import design.aeonic.nifty.api.client.screen.input.GizmoScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.util.Mth;
 import org.lwjgl.glfw.GLFW;
 
-public class StringInputWidget extends AbstractInputWidget {
+public class StringGizmo extends AbstractGizmo {
     public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 12, 14, 0, 24);
 
     public static final Texture BOX_LEFT = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 1, 12, 0, 0);
@@ -26,7 +26,7 @@ public class StringInputWidget extends AbstractInputWidget {
     protected int selectionEnd = -1;
     protected boolean selectionNegative = false;
 
-    public StringInputWidget(int x, int y, int maxLength, String value) {
+    public StringGizmo(int x, int y, int maxLength, String value) {
         super(x, y);
         this.maxLength = maxLength;
         this.widthString = "W".repeat(maxLength);
@@ -43,14 +43,14 @@ public class StringInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public void onClose(WidgetScreen screen) {
+    public void onClose(GizmoScreen screen) {
         cursor = 0;
         selectionStart = -1;
         selectionEnd = -1;
     }
 
     @Override
-    public boolean mouseDown(WidgetScreen screen, int mouseX, int mouseY, int button) {
+    public boolean mouseDown(GizmoScreen screen, int mouseX, int mouseY, int button) {
         if (screen.getFocusedWidget() != this) {
             cursor = value.length();
         } else {
@@ -75,7 +75,7 @@ public class StringInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public boolean keyDown(WidgetScreen screen, int keyCode, int scanCode, int modifiers) {
+    public boolean keyDown(GizmoScreen screen, int keyCode, int scanCode, int modifiers) {
         // TODO: Cleanup, probably move all of this to another reusable input management class
         // Also split into more methods
         // I mean this is like really bad I just kept throwing shit onto it until it had all the functionality I needed
@@ -363,7 +363,7 @@ public class StringInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public void draw(PoseStack stack, WidgetScreen screen, int mouseX, int mouseY, float partialTicks) {
+    public void draw(PoseStack stack, GizmoScreen screen, int mouseX, int mouseY, float partialTicks) {
         if (selectionStart != -1) {
             selectionStart = Mth.clamp(selectionStart, 0, value.length());
             selectionEnd = Mth.clamp(selectionEnd, 0, value.length());

@@ -2,19 +2,21 @@ package design.aeonic.nifty.api.client.screen.input;
 
 import javax.annotation.Nullable;
 
-public interface WidgetScreen {
+public interface GizmoScreen {
 
     /**
      * Widgets should be created with positions relative to the screen; the pose stack will be translated before
      * rendering so you won't need to worry about absolute coordinates.
      */
-    <W extends InputWidget> W addWidget(W widget);
+    <W extends Gizmo> W addWidget(W widget);
 
-    void removeWidget(InputWidget widget);
+    void removeWidget(Gizmo widget);
 
-    @Nullable InputWidget getWidgetAt(int x, int y);
+    @Nullable
+    Gizmo getWidgetAt(int x, int y);
 
-    @Nullable InputWidget getFocusedWidget();
+    @Nullable
+    Gizmo getFocusedWidget();
 
     /**
      * You generally won't need this as the posestack is translated before rendering and mouse positions are relative
@@ -32,11 +34,11 @@ public interface WidgetScreen {
      */
     int getRenderTopPos();
 
-    default void setFocus(InputWidget widget) {
+    default void setFocus(Gizmo widget) {
         if (getFocusedWidget() != null) getFocusedWidget().onLostFocus(this);
     }
 
-    default void clearFocus(InputWidget widget) {
+    default void clearFocus(Gizmo widget) {
         if (getFocusedWidget() != null) getFocusedWidget().onLostFocus(this);
     }
 }

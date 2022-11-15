@@ -2,12 +2,12 @@ package design.aeonic.nifty.api.client.screen.input.widgets;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import design.aeonic.nifty.api.client.Texture;
-import design.aeonic.nifty.api.client.screen.input.AbstractInputWidget;
-import design.aeonic.nifty.api.client.screen.input.WidgetScreen;
+import design.aeonic.nifty.api.client.screen.input.AbstractGizmo;
+import design.aeonic.nifty.api.client.screen.input.GizmoScreen;
 import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.glfw.GLFW;
 
-public class SettingsInputWidget extends AbstractInputWidget {
+public class SettingsGizmo extends AbstractGizmo {
     public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 16, 16, 28, 48);
 
     public static final Texture NORMAL = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 14, 14, 0, 49);
@@ -19,23 +19,23 @@ public class SettingsInputWidget extends AbstractInputWidget {
 
     protected boolean clicked = false;
 
-    public SettingsInputWidget(int x, int y, Runnable action) {
+    public SettingsGizmo(int x, int y, Runnable action) {
         this(x, y, action, action);
     }
 
-    public SettingsInputWidget(int x, int y, Runnable action, Runnable shiftAction) {
+    public SettingsGizmo(int x, int y, Runnable action, Runnable shiftAction) {
         super(x, y);
         this.action = action;
         this.shiftAction = shiftAction;
     }
 
     @Override
-    public void onClose(WidgetScreen screen) {
+    public void onClose(GizmoScreen screen) {
         clicked = false;
     }
 
     @Override
-    public boolean mouseDown(WidgetScreen screen, int mouseX, int mouseY, int button) {
+    public boolean mouseDown(GizmoScreen screen, int mouseX, int mouseY, int button) {
         if (button == 0) {
             clicked = true;
             if (Screen.hasShiftDown()) {
@@ -50,7 +50,7 @@ public class SettingsInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public boolean mouseUp(WidgetScreen screen, int mouseX, int mouseY, int button) {
+    public boolean mouseUp(GizmoScreen screen, int mouseX, int mouseY, int button) {
         if (button == 0 && clicked) {
             clicked = false;
             return true;
@@ -59,7 +59,7 @@ public class SettingsInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public boolean keyDown(WidgetScreen screen, int keyCode, int scanCode, int modifiers) {
+    public boolean keyDown(GizmoScreen screen, int keyCode, int scanCode, int modifiers) {
         if (keyCode == GLFW.GLFW_KEY_SPACE) {
             if (Screen.hasShiftDown()) {
                 shiftAction.run();
@@ -73,7 +73,7 @@ public class SettingsInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public void draw(PoseStack stack, WidgetScreen screen, int mouseX, int mouseY, float partialTicks) {
+    public void draw(PoseStack stack, GizmoScreen screen, int mouseX, int mouseY, float partialTicks) {
         if (isEnabled() && (isWithinBounds(mouseX, mouseY) || screen.getFocusedWidget() == this)) {
             HIGHLIGHT.draw(stack, getX() - 1, getY() - 1, 0, getWidth() + 2, getHeight() + 2, 1, 1, 1, 1, false);
         }

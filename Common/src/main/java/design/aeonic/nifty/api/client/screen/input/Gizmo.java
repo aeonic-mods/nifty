@@ -9,53 +9,57 @@ import java.util.List;
 /**
  * Simplified input widget system used for node rendering and other GUIs.
  */
-public interface InputWidget {
+public interface Gizmo {
 
-    default void onClose(WidgetScreen screen) {}
+    default void onClose(GizmoScreen screen) {}
 
-    default void onLostFocus(WidgetScreen screen) {}
+    default void onLostFocus(GizmoScreen screen) {}
 
-    void draw(PoseStack stack, WidgetScreen screen, int mouseX, int mouseY, float partialTicks);
+    void draw(PoseStack stack, GizmoScreen screen, int mouseX, int mouseY, float partialTicks);
 
     @Nullable
-    default List<Component> getTooltip(WidgetScreen screen, int mouseX, int mouseY) {
+    default List<Component> getTooltip(GizmoScreen screen, int mouseX, int mouseY) {
         return null;
+    }
+
+    default TooltipStyle getTooltipStyle(GizmoScreen screen, int mouseX, int mouseY) {
+        return TooltipStyle.NIFTY;
     }
 
     /**
      * Called only if {@link #isEnabled()} is true and the mouse is over the widget.
      */
-    default boolean mouseDown(WidgetScreen screen, int mouseX, int mouseY, int button) {
+    default boolean mouseDown(GizmoScreen screen, int mouseX, int mouseY, int button) {
         return false;
     }
 
     /**
      * Called for mouse up anywhere regardless of focus.
      */
-    default boolean mouseUp(WidgetScreen screen, int mouseX, int mouseY, int button) {
+    default boolean mouseUp(GizmoScreen screen, int mouseX, int mouseY, int button) {
         return false;
     }
 
     /**
-     * Called only if this widget is focused (that is, this widget is {@link WidgetScreen#getFocusedWidget()}) and
+     * Called only if this widget is focused (that is, this widget is {@link GizmoScreen#getFocusedWidget()}) and
      * {@link #isEnabled()} is true.
      */
-    default boolean keyDown(WidgetScreen screen, int keyCode, int scanCode, int modifiers) {
+    default boolean keyDown(GizmoScreen screen, int keyCode, int scanCode, int modifiers) {
         return false;
     }
 
     /**
-     * Called only if this widget is focused (that is, this widget is {@link WidgetScreen#getFocusedWidget()}) and
+     * Called only if this widget is focused (that is, this widget is {@link GizmoScreen#getFocusedWidget()}) and
      * {@link #isEnabled()} is true.
      */
-    default boolean keyUp(WidgetScreen screen, int keyCode, int scanCode, int modifiers) {
+    default boolean keyUp(GizmoScreen screen, int keyCode, int scanCode, int modifiers) {
         return false;
     }
 
     /**
      * Called only if this widget is hovered and {@link #isEnabled()} is true.
      */
-    default boolean mouseScrolled(WidgetScreen screen, int mouseX, int mouseY, double scrollDelta) {
+    default boolean mouseScrolled(GizmoScreen screen, int mouseX, int mouseY, double scrollDelta) {
         return false;
     }
 

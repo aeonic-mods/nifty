@@ -3,14 +3,14 @@ package design.aeonic.nifty.api.client.screen.input.widgets;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import design.aeonic.nifty.api.client.Texture;
-import design.aeonic.nifty.api.client.screen.input.AbstractInputWidget;
+import design.aeonic.nifty.api.client.screen.input.AbstractGizmo;
+import design.aeonic.nifty.api.client.screen.input.GizmoScreen;
 import design.aeonic.nifty.api.client.screen.input.SimpleMonoText;
-import design.aeonic.nifty.api.client.screen.input.WidgetScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.util.Mth;
 import org.lwjgl.glfw.GLFW;
 
-public class IntInputWidget extends AbstractInputWidget {
+public class IntGizmo extends AbstractGizmo {
     public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 12, 14, 0, 24);
 
     public static final Texture BOX_LEFT = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 10, 12, 0, 0);
@@ -29,7 +29,7 @@ public class IntInputWidget extends AbstractInputWidget {
     protected String stringValue;
     protected boolean edited = false;
 
-    public IntInputWidget(int x, int y, int minValue, int maxValue, int maxDigits, boolean alignRight, int shiftChangeAmount, int value) {
+    public IntGizmo(int x, int y, int minValue, int maxValue, int maxDigits, boolean alignRight, int shiftChangeAmount, int value) {
         super(x, y);
 
         this.minValue = minValue;
@@ -49,12 +49,12 @@ public class IntInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public void onClose(WidgetScreen screen) {
+    public void onClose(GizmoScreen screen) {
         edited = false;
     }
 
     @Override
-    public boolean mouseDown(WidgetScreen screen, int mouseX, int mouseY, int button) {
+    public boolean mouseDown(GizmoScreen screen, int mouseX, int mouseY, int button) {
         if (button == 0) {
             if (isWithinBounds(getX() + 1, getY() + 1, 7, 5, mouseX, mouseY)) {
                 if (minValue == 1 && stringValue.equals("1") && Screen.hasShiftDown()) stringValue = Integer.toString(Mth.clamp(shiftChangeAmount, minValue, maxValue));
@@ -72,7 +72,7 @@ public class IntInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public boolean keyDown(WidgetScreen screen, int keyCode, int scanCode, int modifiers) {
+    public boolean keyDown(GizmoScreen screen, int keyCode, int scanCode, int modifiers) {
         switch (keyCode) {
             case GLFW.GLFW_KEY_MINUS -> {
                 if (minValue >= 0) break;
@@ -123,7 +123,7 @@ public class IntInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public boolean mouseScrolled(WidgetScreen screen, int mouseX, int mouseY, double scrollDelta) {
+    public boolean mouseScrolled(GizmoScreen screen, int mouseX, int mouseY, double scrollDelta) {
         if (minValue == 1 && stringValue.equals("1") && Screen.hasShiftDown()) stringValue = Integer.toString(Mth.clamp(shiftChangeAmount * (scrollDelta > 0 ? 1 : -1), minValue, maxValue));
         else stringValue = Integer.toString(Math.min(maxValue, Math.max(minValue, Integer.parseInt(stringValue) + (Screen.hasShiftDown() ? shiftChangeAmount : 1) * (scrollDelta > 0 ? 1 : -1))));
         playClickSound();
@@ -131,7 +131,7 @@ public class IntInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public void draw(PoseStack stack, WidgetScreen screen, int mouseX, int mouseY, float partialTicks) {
+    public void draw(PoseStack stack, GizmoScreen screen, int mouseX, int mouseY, float partialTicks) {
         if (isEnabled() && (isWithinBounds(mouseX, mouseY) || screen.getFocusedWidget() == this)) {
             HIGHLIGHT.draw(stack, getX() - 1, getY() - 1, 0, getWidth() + 2, getHeight() + 2, 1, 1, 1, 1, false);
         }

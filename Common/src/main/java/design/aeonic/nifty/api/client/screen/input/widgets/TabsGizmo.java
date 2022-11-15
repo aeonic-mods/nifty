@@ -2,14 +2,14 @@ package design.aeonic.nifty.api.client.screen.input.widgets;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import design.aeonic.nifty.api.client.Texture;
-import design.aeonic.nifty.api.client.screen.input.AbstractInputWidget;
-import design.aeonic.nifty.api.client.screen.input.WidgetScreen;
+import design.aeonic.nifty.api.client.screen.input.AbstractGizmo;
+import design.aeonic.nifty.api.client.screen.input.GizmoScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 
 import java.util.function.Consumer;
 
-public class TabsInputWidget extends AbstractInputWidget {
+public class TabsGizmo extends AbstractGizmo {
 
     public static final Texture TAB_LEFT = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 4, 14, 15, 12);
     public static final Texture TAB_FILL = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 64, 14, 0, 30);
@@ -28,7 +28,7 @@ public class TabsInputWidget extends AbstractInputWidget {
     protected final Component[] tabs;
     protected int selected = 0;
 
-    public TabsInputWidget(int x, int y, int padding, int spacing, Consumer<Integer> onSelect, Component... tabs) {
+    public TabsGizmo(int x, int y, int padding, int spacing, Consumer<Integer> onSelect, Component... tabs) {
         super(x, y);
         this.padding = padding;
         this.spacing = spacing;
@@ -45,7 +45,7 @@ public class TabsInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public boolean mouseDown(WidgetScreen screen, int mouseX, int mouseY, int button) {
+    public boolean mouseDown(GizmoScreen screen, int mouseX, int mouseY, int button) {
         if (button == 0) {
             int hovered = getHoveredTab(mouseX, mouseY);
             if (hovered != -1) {
@@ -59,7 +59,7 @@ public class TabsInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public void draw(PoseStack stack, WidgetScreen screen, int mouseX, int mouseY, float partialTicks) {
+    public void draw(PoseStack stack, GizmoScreen screen, int mouseX, int mouseY, float partialTicks) {
         int hovered = getHoveredTab(mouseX, mouseY);
 
         int x = getX();

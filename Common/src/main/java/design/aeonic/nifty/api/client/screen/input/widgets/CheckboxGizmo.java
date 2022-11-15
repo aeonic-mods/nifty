@@ -2,10 +2,10 @@ package design.aeonic.nifty.api.client.screen.input.widgets;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import design.aeonic.nifty.api.client.Texture;
-import design.aeonic.nifty.api.client.screen.input.AbstractInputWidget;
-import design.aeonic.nifty.api.client.screen.input.WidgetScreen;
+import design.aeonic.nifty.api.client.screen.input.AbstractGizmo;
+import design.aeonic.nifty.api.client.screen.input.GizmoScreen;
 
-public class CheckboxInputWidget extends AbstractInputWidget {
+public class CheckboxGizmo extends AbstractGizmo {
     public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 14, 14, 0, 24);
     public static final Texture EMPTY = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 12, 12, 19, 0);
     public static final Texture CHECKED = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 12, 12, 31, 0);
@@ -13,7 +13,7 @@ public class CheckboxInputWidget extends AbstractInputWidget {
     private boolean value;
 
 
-    public CheckboxInputWidget(int x, int y, boolean value) {
+    public CheckboxGizmo(int x, int y, boolean value) {
         super(x, y);
 
         this.value = value;
@@ -28,7 +28,7 @@ public class CheckboxInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public boolean mouseDown(WidgetScreen screen, int mouseX, int mouseY, int button) {
+    public boolean mouseDown(GizmoScreen screen, int mouseX, int mouseY, int button) {
         if (button != 0) return false;
         value = !value;
         playClickSound();
@@ -36,7 +36,7 @@ public class CheckboxInputWidget extends AbstractInputWidget {
     }
 
     @Override
-    public void draw(PoseStack stack, WidgetScreen screen, int mouseX, int mouseY, float partialTicks) {
+    public void draw(PoseStack stack, GizmoScreen screen, int mouseX, int mouseY, float partialTicks) {
         if (isEnabled() && (isWithinBounds(mouseX, mouseY) || screen.getFocusedWidget() == this)) {
             HIGHLIGHT.draw(stack, getX() - 1, getY() - 1, 0);
         }

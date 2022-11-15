@@ -4,29 +4,29 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.SoundEvents;
 
-public abstract class AbstractInputWidget implements InputWidget {
+public abstract class AbstractGizmo implements Gizmo {
     private int x;
     private int y;
     private boolean enabled;
 
     private long lastClickSound = 0;
 
-    public AbstractInputWidget() {
+    public AbstractGizmo() {
         this(0, 0, true);
     }
 
-    public AbstractInputWidget(int x, int y) {
+    public AbstractGizmo(int x, int y) {
         this(x, y, true);
     }
 
-    public AbstractInputWidget(int x, int y, boolean enabled) {
+    public AbstractGizmo(int x, int y, boolean enabled) {
         this.x = x;
         this.y = y;
         this.enabled = enabled;
     }
 
     @Override
-    public boolean mouseDown(WidgetScreen screen, int mouseX, int mouseY, int button) {
+    public boolean mouseDown(GizmoScreen screen, int mouseX, int mouseY, int button) {
         if (button == 0 && screen.getFocusedWidget() != this) {
             screen.clearFocus(screen.getFocusedWidget());
             screen.setFocus(this);
