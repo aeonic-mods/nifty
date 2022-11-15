@@ -1,4 +1,4 @@
-package design.aeonic.nifty.api.client.screen.input.widgets;
+package design.aeonic.nifty.api.client.screen.input.gizmos;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;

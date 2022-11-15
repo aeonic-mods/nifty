@@ -15,7 +15,7 @@ A cross-platform library mod for UI, networking, machinery, transfer and more.
     - Full mod support: on Forge, uses default item, fluid and FE systems; on Fabric, uses Fabric API transfer systems
       and Team Reborn's Energy API
     - Also includes abstracted implementations for simple transfer of your own custom types
-- Component UI sytem (InputWidgets) stolen from my API in Logic Networks, which will eventually be swapped to depend on
+- Component UI sytem (Gizmos) stolen from my API in Logic Networks, which will eventually be swapped to depend on
   this one
 - Some rendering helper methods
 - Base blockentity, menu, and block implementations simplifying machine creation
