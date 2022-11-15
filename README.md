@@ -2,6 +2,10 @@
 
 A cross-platform library mod for UI, networking, machinery, transfer and more.
 
+**Downloads:**
+- [Modrinth](https://modrinth.com/mod/nifty)
+- [Curseforge](https://www.curseforge.com/minecraft/mc-mods/nifty)
+
 ## Features
 
 - Aspects
