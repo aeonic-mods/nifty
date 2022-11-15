@@ -32,3 +32,5 @@ A cross-platform library mod for UI, networking, machinery, transfer and more.
 Feel free to use Nifty in any of your own projects, as a mod dependency or within a modpack. See the LICENSE file for
 more information. Contribution is also heavily appreciated; if you find Nifty is lacking a feature you think would fit,
 let us know in the issues.
+
+The API is pretty extensively documented through [the Javadoc](https://aeonic-mods.github.io/nifty/javadoc/), but I'll write some wiki pages eventually.
