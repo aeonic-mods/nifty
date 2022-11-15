@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.function.Predicate;
 
-public class SimpleItemStorage extends SimpleStorage<ItemStack> implements ItemStorage {
+public class SimpleItemStorage extends SimpleStorage<ItemStack> implements MutableItemStorage {
     public SimpleItemStorage(int size) {
         super(size);
     }
@@ -88,6 +88,18 @@ public class SimpleItemStorage extends SimpleStorage<ItemStack> implements ItemS
     private boolean canStack(ItemStack first, ItemStack second) {
         if (first.hasTag() != second.hasTag()) return false;
         return first.sameItem(second) && ItemStack.tagMatches(first, second);
+    }
+
+    @Override
+    public void setItem(int slot, ItemStack stack) {
+        set(slot, stack);
+    }
+
+    @Override
+    public ItemStack removeItem(int slot) {
+        ItemStack ret = getStackInSlot(slot);
+        set(slot, getEmptyStack());
+        return ret;
     }
 
     public CompoundTag serialize() {
