@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - main
-    tags:
-      - v**
     paths:
       - '.github/workflows/**'
       - 'build.gradle'
@@ -12,7 +10,7 @@ on:
       - '*/build.gradle'
 
 jobs:
-  Gradle-Build:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
