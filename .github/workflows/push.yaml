@@ -40,7 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
           CLEAN: true
-          FOLDER: ~/Common/build/docs/javadoc
+          FOLDER: Common/build/docs/javadoc
           TARGET_FOLDER: javadoc
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
