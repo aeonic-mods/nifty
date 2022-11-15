@@ -36,7 +36,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         id: ghRelease
         with:
-          body: ${{ steps.changelog_reader.outputs.changes }}
+          body_path: CHANGELOG.md
           name: ${{ steps.tagName.outputs.tag }}
           files: |
             Common/build/libs/*.jar
