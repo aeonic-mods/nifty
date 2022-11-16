@@ -7,6 +7,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 
+import java.util.Objects;
+
 /**
  * Represents fluids in a tank or somethin. Up to you man.<br><br>
  * Similar to Forge's fluid stack, but somewhat simplified and with a few key differences,
@@ -153,5 +155,10 @@ public class FluidStack {
         if (amount != that.amount) return false;
         if (!fluid.equals(that.fluid)) return false;
         return tag.equals(that.tag);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fluid, amount, tag);
     }
 }
