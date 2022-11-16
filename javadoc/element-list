@@ -2,7 +2,7 @@ design.aeonic.nifty.api.aspect
 design.aeonic.nifty.api.client
 design.aeonic.nifty.api.client.screen
 design.aeonic.nifty.api.client.screen.input
-design.aeonic.nifty.api.client.screen.input.widgets
+design.aeonic.nifty.api.client.screen.input.gizmos
 design.aeonic.nifty.api.core
 design.aeonic.nifty.api.machine
 design.aeonic.nifty.api.machine.consumption
@@ -10,7 +10,7 @@ design.aeonic.nifty.api.networking
 design.aeonic.nifty.api.networking.container
 design.aeonic.nifty.api.networking.container.field
 design.aeonic.nifty.api.networking.packet
-design.aeonic.nifty.api.services
+design.aeonic.nifty.api.platform
 design.aeonic.nifty.api.transfer
 design.aeonic.nifty.api.transfer.base
 design.aeonic.nifty.api.transfer.energy
