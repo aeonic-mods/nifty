@@ -1,8 +1,16 @@
 # Changelog
+All notable changes to this project will be documented in this file.
 
-## v1.0.1
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-### Breaking
+## [Unreleased]
+
+### Added
+* `RecipeIngredient` and implementations for more modular item, fluid ingredients etc.
+
+## [v1.0.1] - 2022-11-16
+
+### Changed
 
 * `InputWidget` and related classes have been renamed around `Gizmo` to avoid confusion with the
   built-in GUI system.
@@ -16,14 +24,7 @@
 * `FluidStackGizmo` for rendering fluid tanks, and fluid rendering methods in `RenderUtils`
 * `TooltipStyle` for customizing a Gizmo's tooltip
 
-### Extra
-
-* Added automatic Github release workflow
-* Tweaked push/pr workflows
-    * Renamed `Gradle-Build` jobs to `gradle`
-    * Removed Javadoc deployment, moved to release workflow
-
-## v1.0.0
+## [v1.0.0]
 
 ### Added
 
