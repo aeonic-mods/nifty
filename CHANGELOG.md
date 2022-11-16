@@ -10,13 +10,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [v1.0.1] - 2022-11-16
 
-### Changed
-
-* `InputWidget` and related classes have been renamed around `Gizmo` to avoid confusion with the
-  built-in GUI system.
-* The `services` package has been renamed to `platform` since most service APIs are not contained there anyway and there
-  are several non-service classes in the package.
-
 ### Added
 
 * `MutableItemStorage`, `ItemStorageContainer` for item syncing with menus
@@ -24,7 +17,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 * `FluidStackGizmo` for rendering fluid tanks, and fluid rendering methods in `RenderUtils`
 * `TooltipStyle` for customizing a Gizmo's tooltip
 
-## [v1.0.0]
+### Changed
+
+* `InputWidget` and related classes have been renamed around `Gizmo` to avoid confusion with the
+  built-in GUI system.
+* The `services` package has been renamed to `platform` since most service APIs are not contained there anyway and there
+  are several non-service classes in the package.
+
+## [v1.0.0] - 2022-11-15
 
 ### Added
 
