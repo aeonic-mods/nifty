@@ -1,8 +1,5 @@
 # Changelog
 
-Changes to the Nifty API and implementation that are of note will be documented here.
-Please document your changes in this document if you are opening a pull request.
-
 ## v1.0.1
 
 ### Breaking
