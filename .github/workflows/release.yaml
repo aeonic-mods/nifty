@@ -9,6 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Get gradle properties
+        uses: madhead/read-java-properties@latest
+        id: gradle-properties
+        with:
+          file: gradle.properties
+          all: true
       - name: Get tag name
         uses: olegtarasov/get-tag@v2.1
         id: tagName
@@ -40,6 +46,36 @@ jobs:
             Common/build/libs/*.jar
             Fabric/build/libs/*.jar
             Forge/build/libs/*.jar
+      - name: Fabric mod release
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          modrinth-id: IlyLeWOY
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-id: 702601
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          changelog-path: CHANGELOG.md
+          files-primary: Fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
+          files-secondary: Fabric/build/libs/*-@(dev|sources|javadoc).jar
+          loaders: [fabric, quilt]
+          name: Fabric ${{ steps.gradle-properties.outputs.minecraft_version }}-${{ steps.tagName.outputs.tag }}
+          version: ${{ steps.tagName.outputs.tag }}
+          game-versions: ${{ steps.gradle-properties.outputs.minecraft_version }}
+          dependencies: |
+            fabric | depends | *
+      - name: Forge mod release
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          modrinth-id: IlyLeWOY
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-id: 702601
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          changelog-path: CHANGELOG.md
+          files-primary: Forge/build/libs/!(*-@(dev|sources|javadoc)).jar
+          files-secondary: Forge/build/libs/*-@(dev|sources|javadoc).jar
+          loaders: [forge]
+          name: Forge ${{ steps.gradle-properties.outputs.minecraft_version }}-${{ steps.tagName.outputs.tag }}
+          version: ${{ steps.tagName.outputs.tag }}
+          game-versions: ${{ steps.gradle-properties.outputs.minecraft_version }}
       - name: Deploy Javadocs
         uses: JamesIves/github-pages-deploy-action@3.5.9
         with:
