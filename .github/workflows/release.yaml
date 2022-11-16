@@ -9,13 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Get version from gradle.properties
-        uses: madhead/read-java-properties@latest
-        id: version
-        with:
-          file: gradle.properties
-          property: version
-          default: 0.0.1
+      - name: Get tag name
+        uses: olegtarasov/get-tag@v2.1
+        id: tagName
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
@@ -39,7 +35,7 @@ jobs:
         id: ghRelease
         with:
           body_path: CHANGELOG.md
-          name: v${{ steps.version.outputs.value }}
+          name: ${{ steps.tagName.outputs.tag }}
           files: |
             Common/build/libs/*.jar
             Fabric/build/libs/*.jar
