@@ -2,10 +2,11 @@ package design.aeonic.nifty.api.client;
 
 import design.aeonic.nifty.api.transfer.fluid.FluidStack;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 
 /**
- * Exposes rendering info for a given fluid.
+ * Exposes rendering info for a given fluid. Obtained from {@link design.aeonic.nifty.api.services.PlatformAccess#getFluidRenderInfo(Fluid)}.
  */
 public interface FluidRenderInfo {
     /**
