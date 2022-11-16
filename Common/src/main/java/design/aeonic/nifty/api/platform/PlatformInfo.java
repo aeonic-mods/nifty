@@ -2,6 +2,7 @@ package design.aeonic.nifty.api.platform;
 
 import design.aeonic.nifty.api.core.Services;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public interface PlatformInfo {
@@ -34,6 +35,11 @@ public interface PlatformInfo {
      * @return True if the mod is loaded, false otherwise.
      */
     boolean isModLoaded(String modId);
+
+    /**
+     * If the given mod is loaded, returns the mod info object. Otherwise, returns an empty optional.
+     */
+    Optional<ModInfo> getModInfo(String modId);
 
     /**
      * Check if the game is currently in a development environment.

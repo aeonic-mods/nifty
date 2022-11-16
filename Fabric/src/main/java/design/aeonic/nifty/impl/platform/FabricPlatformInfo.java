@@ -28,4 +28,9 @@ public class FabricPlatformInfo implements PlatformInfo {
     public boolean isDevelopmentEnvironment() {
         return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
+
+    @Override
+    public Optional<ModInfo> getModInfo(String modId) {
+        return FabricLoader.getInstance().getModContainer(modId).map(FabricModInfo::new);
+    }
 }

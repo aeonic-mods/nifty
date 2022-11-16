@@ -1,8 +1,11 @@
 package design.aeonic.nifty.impl.platform;
 
+import design.aeonic.nifty.api.platform.ModInfo;
 import design.aeonic.nifty.api.platform.PlatformInfo;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
+
+import java.util.Optional;
 
 public class ForgePlatformInfo implements PlatformInfo {
 
@@ -18,13 +21,16 @@ public class ForgePlatformInfo implements PlatformInfo {
 
     @Override
     public boolean isModLoaded(String modId) {
-
         return ModList.get().isLoaded(modId);
     }
 
     @Override
-    public boolean isDevelopmentEnvironment() {
+    public Optional<ModInfo> getModInfo(String modId) {
+        return ModList.get().getModContainerById(modId).map(ForgeModInfo::new);
+    }
 
+    @Override
+    public boolean isDevelopmentEnvironment() {
         return !FMLLoader.isProduction();
     }
 }
