@@ -3,21 +3,119 @@ package design.aeonic.nifty.api.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
-import net.minecraft.client.Minecraft;
+import design.aeonic.nifty.api.services.PlatformAccess;
+import design.aeonic.nifty.api.transfer.fluid.FluidStack;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.inventory.tooltip.TooltipComponent;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
+/**
+ * Messy class with some utility methods for rendering.
+ */
 public final class RenderUtils {
+
+    /**
+     * Renders a fluid block with the given state (though it ignores the level - use the height parameter instead).
+     */
+    public static void drawFluidBlock(PoseStack stack, FluidState fluidState, FluidRenderInfo fluidInfo, float height) {
+        TextureAtlasSprite sprite = fluidInfo.getStillTexture(fluidState);
+        float[] color = new float[4];
+        RenderUtils.unpackRGBA(fluidInfo.getTintColor(fluidState), color);
+
+        RenderSystem.setShaderColor(color[1], color[2], color[3], 1f);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, sprite.atlas().location());
+
+        float u0 = sprite.getU0();
+        float u1 = sprite.getU1();
+        float v0 = sprite.getV0();
+        float v1 = sprite.getV(height * .98f * sprite.getHeight());
+
+        stack.pushPose();
+        Matrix4f pose = stack.last().pose();
+        BufferBuilder builder = Tesselator.getInstance().getBuilder();
+        builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+
+        builder.vertex(pose, 0, height * .98f, .02f).uv(u0, v1).endVertex();
+        builder.vertex(pose, 1, height * .98f, .02f).uv(u1, v1).endVertex();
+        builder.vertex(pose, 1, 0, .02f).uv(u1, v0).endVertex();
+        builder.vertex(pose, 0, 0, .02f).uv(u0, v0).endVertex();
+
+        builder.vertex(pose, 1, height * .98f, .98f).uv(u0, v1).endVertex();
+        builder.vertex(pose, 0, height * .98f, .98f).uv(u1, v1).endVertex();
+        builder.vertex(pose, 0, 0, .98f).uv(u1, v0).endVertex();
+        builder.vertex(pose, 1, 0, .98f).uv(u0, v0).endVertex();
+
+        builder.vertex(pose, .98f, height * .98f, 0).uv(u0, v1).endVertex();
+        builder.vertex(pose, .98f, height * .98f, 1).uv(u1, v1).endVertex();
+        builder.vertex(pose, .98f, 0, 1).uv(u1, v0).endVertex();
+        builder.vertex(pose, .98f, 0, 0).uv(u0, v0).endVertex();
+
+        builder.vertex(pose, .02f, height * .98f, 1).uv(u0, v1).endVertex();
+        builder.vertex(pose, .02f, height * .98f, 0).uv(u1, v1).endVertex();
+        builder.vertex(pose, .02f, 0, 0).uv(u1, v0).endVertex();
+        builder.vertex(pose, .02f, 0, 1).uv(u0, v0).endVertex();
+
+        builder.vertex(pose, 0, height * .98f, 1).uv(u0, sprite.getV1()).endVertex();
+        builder.vertex(pose, 1, height * .98f, 1).uv(u1, sprite.getV1()).endVertex();
+        builder.vertex(pose, 1, height * .98f, 0).uv(u1, v0).endVertex();
+        builder.vertex(pose, 0, height * .98f, 0).uv(u0, v0).endVertex();
+
+        builder.end();
+        stack.popPose();
+
+        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
+    /**
+     * Draws a fluid stack to the screen, intended for use in a GUI.
+     * @param stack the pose stack
+     * @param x the x position
+     * @param y the y position
+     * @param zOffset the z position (blit offset)
+     * @param width the width
+     * @param height the height
+     * @param fluidStack the fluid stack
+     * @param fluidRenderInfo the fluid render info (obtained from {@link PlatformAccess#getFluidRenderInfo(Fluid)}
+     */
+    public static void drawScreenFluid(PoseStack stack, int x, int y, int zOffset, int width, int height, FluidStack fluidStack, FluidRenderInfo fluidRenderInfo) {
+        TextureAtlasSprite sprite = fluidRenderInfo.getStillTexture(fluidStack);
+        float[] color = new float[4];
+        RenderUtils.unpackRGBA(fluidRenderInfo.getTintColor(fluidStack), color);
+
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(color[0], color[1], color[2], color[3]);
+        RenderSystem.setShaderTexture(0, sprite.atlas().location());
+        BufferBuilder builder = Tesselator.getInstance().getBuilder();
+        Matrix4f pose = stack.last().pose();
+        builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+
+        do {
+            int drawHeight = Math.min(sprite.getHeight(), height);
+            height -= drawHeight;
+            float v1 = sprite.getV((16f * drawHeight) / sprite.getHeight());
+            int x2 = x;
+            int widthLeft = width;
+
+            do {
+                int drawWidth = Math.min(sprite.getWidth(), widthLeft);
+                widthLeft -= drawWidth;
+                float u1 = sprite.getU((16f * drawWidth) / sprite.getWidth());
+
+                builder.vertex(pose, x2, y + drawHeight, zOffset).uv(sprite.getU0(), v1).endVertex();
+                builder.vertex(pose, x2 + drawWidth, y + drawHeight, zOffset).uv(u1, v1).endVertex();
+                builder.vertex(pose, x2 + drawWidth, y, zOffset).uv(u1, sprite.getV0()).endVertex();
+                builder.vertex(pose, x2, y, zOffset).uv(sprite.getU0(), sprite.getV0()).endVertex();
+
+                x2 += drawWidth;
+            } while (widthLeft > 0);
+        } while (height > 0);
+
+        builder.end();
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+    }
 
     public static void angleGradient(PoseStack stack, int x1, int y1, int x2, int y2, int z, int fromRGBA, int toRGBA) {
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
@@ -90,117 +188,5 @@ public final class RenderUtils {
             Screen.blit(stack, x, y + i, zOffset, 0, cornerHeight, cornerWidth, h, texture.fileWidth(), texture.fileHeight());
             Screen.blit(stack, x + width - cornerWidth, y + i, zOffset, texture.fileWidth() - cornerWidth, cornerHeight, cornerWidth, h, texture.fileWidth(), texture.fileHeight());
         }
-    }
-
-    // Below here mostly copied implementations from private statics, just to avoid unnecessary transformations or reflectoin
-
-    public static void renderTooltip(PoseStack poseStack, ItemStack itemStack, int x, int y) {
-        renderTooltip(poseStack, getTooltipFromItem(itemStack), itemStack.getTooltipImage(), x, y);
-    }
-
-    public static void renderTooltip(PoseStack stack, List<Component> components, Optional<TooltipComponent> extra, int x, int y) {
-        List<ClientTooltipComponent> $$5 = components.stream().map(Component::getVisualOrderText).map(ClientTooltipComponent::create).collect(Collectors.toList());
-        extra.ifPresent(($$1x) -> $$5.add(1, ClientTooltipComponent.create($$1x)));
-        renderTooltipInternal(stack, $$5, x, y);
-    }
-
-    private static void renderTooltipInternal(PoseStack stack, List<ClientTooltipComponent> tooltip, int x, int y) {
-        if (!tooltip.isEmpty()) {
-            int $$4 = 0;
-            int $$5 = tooltip.size() == 1 ? -2 : 0;
-
-            for(ClientTooltipComponent $$6 : tooltip) {
-                int $$7 = $$6.getWidth(Minecraft.getInstance().font);
-                if ($$7 > $$4) {
-                    $$4 = $$7;
-                }
-
-                $$5 += $$6.getHeight();
-            }
-
-            int $$8 = x + 12;
-            int $$9 = y - 12;
-//            if ($$8 + $$4 > this.width) {
-//                $$8 -= 28 + $$4;
-//            }
-//
-//            if ($$9 + $$5 + 6 > this.height) {
-//                $$9 = this.height - $$5 - 6;
-//            }
-
-            if (y - $$5 - 8 < 0) {
-                $$9 = y + 8;
-            }
-
-            stack.pushPose();
-            int $$12 = -267386864;
-            int $$13 = 1347420415;
-            int $$14 = 1344798847;
-            int $$15 = 400;
-            float $$16 = Minecraft.getInstance().getItemRenderer().blitOffset;
-            Minecraft.getInstance().getItemRenderer().blitOffset = 400.0F;
-            Tesselator $$17 = Tesselator.getInstance();
-            BufferBuilder $$18 = $$17.getBuilder();
-            RenderSystem.setShader(GameRenderer::getPositionColorShader);
-            $$18.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-            Matrix4f $$19 = stack.last().pose();
-            fillGradient($$19, $$18, $$8 - 3, $$9 - 4, $$8 + $$4 + 3, $$9 - 3, 400, -267386864, -267386864);
-            fillGradient($$19, $$18, $$8 - 3, $$9 + $$5 + 3, $$8 + $$4 + 3, $$9 + $$5 + 4, 400, -267386864, -267386864);
-            fillGradient($$19, $$18, $$8 - 3, $$9 - 3, $$8 + $$4 + 3, $$9 + $$5 + 3, 400, -267386864, -267386864);
-            fillGradient($$19, $$18, $$8 - 4, $$9 - 3, $$8 - 3, $$9 + $$5 + 3, 400, -267386864, -267386864);
-            fillGradient($$19, $$18, $$8 + $$4 + 3, $$9 - 3, $$8 + $$4 + 4, $$9 + $$5 + 3, 400, -267386864, -267386864);
-            fillGradient($$19, $$18, $$8 - 3, $$9 - 3 + 1, $$8 - 3 + 1, $$9 + $$5 + 3 - 1, 400, 1347420415, 1344798847);
-            fillGradient($$19, $$18, $$8 + $$4 + 2, $$9 - 3 + 1, $$8 + $$4 + 3, $$9 + $$5 + 3 - 1, 400, 1347420415, 1344798847);
-            fillGradient($$19, $$18, $$8 - 3, $$9 - 3, $$8 + $$4 + 3, $$9 - 3 + 1, 400, 1347420415, 1347420415);
-            fillGradient($$19, $$18, $$8 - 3, $$9 + $$5 + 2, $$8 + $$4 + 3, $$9 + $$5 + 3, 400, 1344798847, 1344798847);
-            RenderSystem.enableDepthTest();
-            RenderSystem.disableTexture();
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            BufferUploader.drawWithShader($$18.end());
-            RenderSystem.disableBlend();
-            RenderSystem.enableTexture();
-            MultiBufferSource.BufferSource $$20 = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-            stack.translate(0.0D, 0.0D, 400.0D);
-            int $$21 = $$9;
-
-            for(int $$22 = 0; $$22 < tooltip.size(); ++$$22) {
-                ClientTooltipComponent $$23 = tooltip.get($$22);
-                $$23.renderText(Minecraft.getInstance().font, $$8, $$21, $$19, $$20);
-                $$21 += $$23.getHeight() + ($$22 == 0 ? 2 : 0);
-            }
-
-            $$20.endBatch();
-            stack.popPose();
-            $$21 = $$9;
-
-            for(int $$24 = 0; $$24 < tooltip.size(); ++$$24) {
-                ClientTooltipComponent $$25 = tooltip.get($$24);
-                $$25.renderImage(Minecraft.getInstance().font, $$8, $$21, stack, Minecraft.getInstance().getItemRenderer(), 400);
-                $$21 += $$25.getHeight() + ($$24 == 0 ? 2 : 0);
-            }
-
-            Minecraft.getInstance().getItemRenderer().blitOffset = $$16;
-        }
-    }
-
-    public static List<Component> getTooltipFromItem(ItemStack stack) {
-        return stack.getTooltipLines(Minecraft.getInstance().player, Minecraft.getInstance().options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
-    }
-
-
-    private static void fillGradient(Matrix4f $$0, BufferBuilder $$1, int $$2, int $$3, int $$4, int $$5, int $$6, int $$7, int $$8) {
-        float $$9 = (float)($$7 >> 24 & 255) / 255.0F;
-        float $$10 = (float)($$7 >> 16 & 255) / 255.0F;
-        float $$11 = (float)($$7 >> 8 & 255) / 255.0F;
-        float $$12 = (float)($$7 & 255) / 255.0F;
-        float $$13 = (float)($$8 >> 24 & 255) / 255.0F;
-        float $$14 = (float)($$8 >> 16 & 255) / 255.0F;
-        float $$15 = (float)($$8 >> 8 & 255) / 255.0F;
-        float $$16 = (float)($$8 & 255) / 255.0F;
-        $$1.vertex($$0, (float)$$4, (float)$$3, (float)$$6).color($$10, $$11, $$12, $$9).endVertex();
-        $$1.vertex($$0, (float)$$2, (float)$$3, (float)$$6).color($$10, $$11, $$12, $$9).endVertex();
-        $$1.vertex($$0, (float)$$2, (float)$$5, (float)$$6).color($$14, $$15, $$16, $$13).endVertex();
-        $$1.vertex($$0, (float)$$4, (float)$$5, (float)$$6).color($$14, $$15, $$16, $$13).endVertex();
     }
 }
