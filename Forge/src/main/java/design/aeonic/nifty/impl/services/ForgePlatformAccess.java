@@ -1,6 +1,8 @@
 package design.aeonic.nifty.impl.services;
 
+import design.aeonic.nifty.api.client.FluidRenderInfo;
 import design.aeonic.nifty.api.services.PlatformAccess;
+import design.aeonic.nifty.impl.client.ForgeFluidRenderInfo;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -14,6 +16,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.material.Fluid;
 
 import java.util.function.Supplier;
 
@@ -51,5 +54,10 @@ public class ForgePlatformAccess implements PlatformAccess {
     @Override
     public int getBurnTime(ItemStack stack) {
         return stack.getBurnTime(RecipeType.SMELTING);
+    }
+
+    @Override
+    public FluidRenderInfo getFluidRenderInfo(Fluid fluid) {
+        return ForgeFluidRenderInfo.get(fluid);
     }
 }

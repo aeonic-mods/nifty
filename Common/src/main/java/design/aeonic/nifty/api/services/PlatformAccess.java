@@ -1,5 +1,6 @@
 package design.aeonic.nifty.api.services;
 
+import design.aeonic.nifty.api.client.FluidRenderInfo;
 import design.aeonic.nifty.api.core.Services;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderType;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 
 import java.util.function.Supplier;
 
@@ -35,6 +37,11 @@ public interface PlatformAccess {
      * Gets the burn time of a given item stack, or 0 if it is not a fuel.
      */
     int getBurnTime(ItemStack stack);
+
+    /**
+     * Gets the fluid render info for a given fluid. Client only!
+     */
+    FluidRenderInfo getFluidRenderInfo(Fluid fluid);
 
     @FunctionalInterface
     interface MenuSupplier<T extends AbstractContainerMenu> {

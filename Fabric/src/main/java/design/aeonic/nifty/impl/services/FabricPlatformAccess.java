@@ -1,6 +1,8 @@
 package design.aeonic.nifty.impl.services;
 
+import design.aeonic.nifty.api.client.FluidRenderInfo;
 import design.aeonic.nifty.api.services.PlatformAccess;
+import design.aeonic.nifty.impl.client.FabricFluidRenderInfo;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -16,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.material.Fluid;
 
 import java.util.function.Supplier;
 
@@ -48,5 +51,10 @@ public class FabricPlatformAccess implements PlatformAccess {
     @Override
     public int getBurnTime(ItemStack stack) {
         return FuelRegistry.INSTANCE.get(stack.getItem());
+    }
+
+    @Override
+    public FluidRenderInfo getFluidRenderInfo(Fluid fluid) {
+        return FabricFluidRenderInfo.get(fluid);
     }
 }

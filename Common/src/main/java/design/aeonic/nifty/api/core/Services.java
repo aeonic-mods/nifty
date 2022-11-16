@@ -8,9 +8,21 @@ import design.aeonic.nifty.api.services.PlatformInfo;
 import java.util.ServiceLoader;
 
 public class Services {
+    /**
+     * Contains information about the current platform and (eventually) loaded mods.
+     */
     public static final PlatformInfo PLATFORM = load(PlatformInfo.class);
+    /**
+     * Provides access to platform-specific functionality or Vanilla code that the platform exposes.
+     */
     public static final PlatformAccess ACCESS = load(PlatformAccess.class);
+    /**
+     * Aspects! Like capabilities, but not.
+     */
     public static final Aspects ASPECTS = load(Aspects.class);
+    /**
+     * Provides networking functionality, packets etc.
+     */
     public static final Networking NETWORKING = load(Networking.class);
 
     public static <T> T load(Class<T> clazz) {
