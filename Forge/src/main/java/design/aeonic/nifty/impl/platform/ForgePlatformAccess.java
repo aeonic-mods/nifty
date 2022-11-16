@@ -1,7 +1,7 @@
-package design.aeonic.nifty.impl.services;
+package design.aeonic.nifty.impl.platform;
 
 import design.aeonic.nifty.api.client.FluidRenderInfo;
-import design.aeonic.nifty.api.services.PlatformAccess;
+import design.aeonic.nifty.api.platform.PlatformAccess;
 import design.aeonic.nifty.impl.client.ForgeFluidRenderInfo;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

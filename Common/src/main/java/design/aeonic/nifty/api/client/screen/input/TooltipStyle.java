@@ -16,7 +16,13 @@ import java.util.List;
  * Describes a style of tooltip that can be rendered; used by {@link Gizmo}s.
  */
 public interface TooltipStyle {
+    /**
+     * The vanilla tooltip renderer, used by item stacks. Not default.
+     */
     TooltipStyle VANILLA = new VanillaTooltipStyle();
+    /**
+     * The Nifty tooltip renderer, used for most UI gizmos by default.
+     */
     TooltipStyle NIFTY = new NiftyTooltipStyle();
     
     void renderTooltip(Screen screen, PoseStack stack, int mouseX, int mouseY, List<Component> tooltip);

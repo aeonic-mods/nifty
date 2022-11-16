@@ -1,4 +1,4 @@
-package design.aeonic.nifty.api.services;
+package design.aeonic.nifty.api.platform;
 
 import design.aeonic.nifty.api.client.FluidRenderInfo;
 import design.aeonic.nifty.api.core.Services;

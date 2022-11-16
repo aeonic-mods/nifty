@@ -6,7 +6,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 
 /**
- * Exposes rendering info for a given fluid. Obtained from {@link design.aeonic.nifty.api.services.PlatformAccess#getFluidRenderInfo(Fluid)}.
+ * Exposes rendering info for a given fluid. Obtained from {@link design.aeonic.nifty.api.platform.PlatformAccess#getFluidRenderInfo(Fluid)}.
  */
 public interface FluidRenderInfo {
     /**

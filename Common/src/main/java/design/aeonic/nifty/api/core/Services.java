@@ -2,8 +2,8 @@ package design.aeonic.nifty.api.core;
 
 import design.aeonic.nifty.api.aspect.Aspects;
 import design.aeonic.nifty.api.networking.Networking;
-import design.aeonic.nifty.api.services.PlatformAccess;
-import design.aeonic.nifty.api.services.PlatformInfo;
+import design.aeonic.nifty.api.platform.PlatformAccess;
+import design.aeonic.nifty.api.platform.PlatformInfo;
 
 import java.util.ServiceLoader;
 

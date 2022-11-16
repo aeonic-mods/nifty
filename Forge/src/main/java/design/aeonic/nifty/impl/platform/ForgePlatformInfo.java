@@ -1,6 +1,6 @@
-package design.aeonic.nifty.impl.services;
+package design.aeonic.nifty.impl.platform;
 
-import design.aeonic.nifty.api.services.PlatformInfo;
+import design.aeonic.nifty.api.platform.PlatformInfo;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 

@@ -3,7 +3,7 @@ package design.aeonic.nifty.api.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
-import design.aeonic.nifty.api.services.PlatformAccess;
+import design.aeonic.nifty.api.platform.PlatformAccess;
 import design.aeonic.nifty.api.transfer.fluid.FluidStack;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;

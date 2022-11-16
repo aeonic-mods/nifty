@@ -1,7 +1,7 @@
-package design.aeonic.nifty.impl.services;
+package design.aeonic.nifty.impl.platform;
 
 import design.aeonic.nifty.api.client.FluidRenderInfo;
-import design.aeonic.nifty.api.services.PlatformAccess;
+import design.aeonic.nifty.api.platform.PlatformAccess;
 import design.aeonic.nifty.impl.client.FabricFluidRenderInfo;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;

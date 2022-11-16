@@ -1,8 +1,11 @@
-package design.aeonic.nifty.impl.services;
+package design.aeonic.nifty.impl.platform;
 
-import design.aeonic.nifty.api.services.PlatformInfo;
+import design.aeonic.nifty.api.platform.ModInfo;
+import design.aeonic.nifty.api.platform.PlatformInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
+
+import java.util.Optional;
 
 public class FabricPlatformInfo implements PlatformInfo {
 
@@ -18,13 +21,11 @@ public class FabricPlatformInfo implements PlatformInfo {
 
     @Override
     public boolean isModLoaded(String modId) {
-
         return FabricLoader.getInstance().isModLoaded(modId);
     }
 
     @Override
     public boolean isDevelopmentEnvironment() {
-
         return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
 }
