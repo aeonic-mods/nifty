@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.stream.Stream;
 
-public class ItemEmptyValue implements IngredientValue<ItemStack> {
+public class ItemEmptyValue implements ItemIngredientValue {
     public static final ItemEmptyValue INSTANCE = new ItemEmptyValue();
 
     @Override
@@ -30,4 +30,9 @@ public class ItemEmptyValue implements IngredientValue<ItemStack> {
 
     @Override
     public void toJson(JsonObject object) {}
+
+    @Override
+    public Ingredient asIngredient() {
+        return Ingredient.EMPTY;
+    }
 }

@@ -6,9 +6,10 @@ import design.aeonic.nifty.api.networking.packet.ExtraFriendlyByteBuf;
 import design.aeonic.nifty.api.recipe.ingredient.IngredientValue;
 import design.aeonic.nifty.api.recipe.ingredient.ModularIngredient;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
 public class ItemIngredient extends ModularIngredient<ItemStack> {
-    public ItemIngredient(IngredientValue<ItemStack> value, long requiredAmount) {
+    public ItemIngredient(ItemIngredientValue value, long requiredAmount) {
         super(value, requiredAmount);
     }
 
@@ -16,7 +17,7 @@ public class ItemIngredient extends ModularIngredient<ItemStack> {
         return new ItemIngredient(valueFromNetwork(buf), buf.readVarLong());
     }
 
-    public static IngredientValue<ItemStack> valueFromNetwork(ExtraFriendlyByteBuf buf) {
+    public static ItemIngredientValue valueFromNetwork(ExtraFriendlyByteBuf buf) {
         return switch (buf.readEnum(Type.class)) {
             case STACK -> ItemStackValue.fromNetwork(buf);
             case MULTI_STACK -> ItemMultiStackValue.fromNetwork(buf);
@@ -29,7 +30,7 @@ public class ItemIngredient extends ModularIngredient<ItemStack> {
         return new ItemIngredient(valueFromJson(json), json.get("amount").getAsLong());
     }
 
-    public static IngredientValue<ItemStack> valueFromJson(JsonObject object) {
+    public static ItemIngredientValue valueFromJson(JsonObject object) {
         if (object.has("tag")) return ItemTagValue.fromJson(object);
         if (object.has("item")) {
             JsonElement item = object.get("item");
@@ -48,6 +49,10 @@ public class ItemIngredient extends ModularIngredient<ItemStack> {
     public ItemStack setAmount(ItemStack stack, long amount) {
         stack.setCount((int) amount);
         return stack;
+    }
+
+    public Ingredient asIngredient() {
+        return ((ItemIngredient) value).asIngredient();
     }
 
     public enum Type {

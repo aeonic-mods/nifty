@@ -10,6 +10,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.stream.Stream;
  * A item ingredient value with multiple valid items. Note that it only matches one nbt value; that value is outside
  * of the item type.
  */
-public class ItemMultiStackValue implements IngredientValue<ItemStack> {
+public class ItemMultiStackValue implements ItemIngredientValue {
     private final List<ItemStack> stacks;
 
     public ItemMultiStackValue(List<ItemStack> stacks) {
@@ -53,6 +54,11 @@ public class ItemMultiStackValue implements IngredientValue<ItemStack> {
     @Override
     public Stream<ItemStack> getMatchingStacks() {
         return stacks.stream();
+    }
+
+    @Override
+    public Ingredient asIngredient() {
+        return Ingredient.of(stacks.toArray(new ItemStack[0]));
     }
 
     @Override

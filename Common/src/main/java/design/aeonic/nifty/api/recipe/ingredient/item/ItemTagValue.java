@@ -9,10 +9,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.stream.Stream;
 
-public class ItemTagValue implements IngredientValue<ItemStack> {
+public class ItemTagValue implements ItemIngredientValue {
     private final TagKey<Item> tagKey;
 
     public ItemTagValue(TagKey<Item> tagKey) {
@@ -35,6 +36,11 @@ public class ItemTagValue implements IngredientValue<ItemStack> {
     @Override
     public Stream<ItemStack> getMatchingStacks() {
         return Registry.ITEM.getOrCreateTag(tagKey).stream().filter(Holder::isBound).map(Holder::value).map(ItemStack::new);
+    }
+
+    @Override
+    public Ingredient asIngredient() {
+        return Ingredient.of(tagKey);
     }
 
     @Override

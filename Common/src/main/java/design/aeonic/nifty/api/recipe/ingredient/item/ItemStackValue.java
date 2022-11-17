@@ -9,11 +9,12 @@ import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public class ItemStackValue implements IngredientValue<ItemStack> {
+public class ItemStackValue implements ItemIngredientValue {
     private final ItemStack stack;
 
     public ItemStackValue(ItemStack stack) {
@@ -38,6 +39,11 @@ public class ItemStackValue implements IngredientValue<ItemStack> {
     @Override
     public Stream<ItemStack> getMatchingStacks() {
         return Stream.of(stack);
+    }
+
+    @Override
+    public Ingredient asIngredient() {
+        return Ingredient.of(stack);
     }
 
     @Override
