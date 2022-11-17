@@ -13,6 +13,10 @@ public class ItemIngredient extends ModularIngredient<ItemStack> {
         super(value, requiredAmount);
     }
 
+    public static ItemIngredient of(Ingredient vanillaIngredient, long requiredAmount) {
+        return new ItemIngredient(new ItemVanillaValue(vanillaIngredient), requiredAmount);
+    }
+
     public static ItemIngredient fromNetwork(ExtraFriendlyByteBuf buf) {
         return new ItemIngredient(valueFromNetwork(buf), buf.readVarLong());
     }
@@ -23,6 +27,7 @@ public class ItemIngredient extends ModularIngredient<ItemStack> {
             case MULTI_STACK -> ItemMultiStackValue.fromNetwork(buf);
             case TAG -> ItemTagValue.fromNetwork(buf);
             case EMPTY -> ItemEmptyValue.INSTANCE;
+            case VANILLA -> ItemVanillaValue.fromNetwork(buf);
         };
     }
 
@@ -59,6 +64,7 @@ public class ItemIngredient extends ModularIngredient<ItemStack> {
         STACK,
         MULTI_STACK,
         TAG,
-        EMPTY
+        EMPTY,
+        VANILLA
     }
 }
