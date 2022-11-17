@@ -5,7 +5,7 @@ import design.aeonic.nifty.api.networking.packet.ExtraFriendlyByteBuf;
 
 import java.util.List;
 
-public abstract class ModularIngredient<T> implements RecipeIngredient<T> {
+public abstract class ModularIngredient<T> implements CountableRecipeIngredient<T> {
     protected final IngredientValue<T> value;
     protected final long requiredAmount;
 
