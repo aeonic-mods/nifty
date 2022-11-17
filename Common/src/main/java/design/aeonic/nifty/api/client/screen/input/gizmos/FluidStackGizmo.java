@@ -8,17 +8,12 @@ import design.aeonic.nifty.api.client.screen.input.AbstractGizmo;
 import design.aeonic.nifty.api.client.screen.input.GizmoScreen;
 import design.aeonic.nifty.api.client.screen.input.TooltipStyle;
 import design.aeonic.nifty.api.core.Services;
-import design.aeonic.nifty.api.platform.ModInfo;
 import design.aeonic.nifty.api.transfer.fluid.FluidStack;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -28,9 +23,7 @@ public class FluidStackGizmo extends AbstractGizmo {
     private final Texture tankOverlay;
     private int width;
     private int height;
-    private int hashCache;
-    private ResourceLocation fluidKey;
-    private Component modNameComponent;
+    private Fluid fluidCache;
     private FluidRenderInfo fluidRenderInfo;
 
     /**
@@ -87,15 +80,9 @@ public class FluidStackGizmo extends AbstractGizmo {
     }
 
     void update() {
-        if (hashCache != fluidStack.get().hashCode()) {
-            hashCache = fluidStack.get().hashCode();
-            fluidKey = Registry.FLUID.getKey(fluidStack.get().getFluid());
+        if (fluidCache != fluidStack.get().getFluid()) {
+            fluidCache = fluidStack.get().getFluid();
             fluidRenderInfo = Services.ACCESS.getFluidRenderInfo(fluidStack.get().getFluid());
-
-            String modId = fluidKey.getNamespace();
-            if (modId.equals("minecraft")) modNameComponent = Component.literal("Minecraft");
-            else modNameComponent = Component.literal(Services.PLATFORM.getModInfo(modId).map(ModInfo::getModName).orElse("minecraft"))
-                    .withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC); // Jei style baby
         }
     }
 
@@ -114,17 +101,7 @@ public class FluidStackGizmo extends AbstractGizmo {
     @Nullable
     @Override
     public List<Component> getTooltip(GizmoScreen screen, int mouseX, int mouseY) {
-        return Minecraft.getInstance().options.advancedItemTooltips ? List.of(
-                // TODO: There might be forge/fabric replacements for this
-                Component.translatable("block." + fluidKey.getNamespace() + "." + fluidKey.getPath()),
-                Component.literal(DecimalFormat.getIntegerInstance().format(fluidStack.get().getAmount()) + " mB"),
-                modNameComponent,
-                Component.literal(fluidKey.toString())
-        ) : List.of(
-                Component.translatable("block." + fluidKey.getNamespace() + "." + fluidKey.getPath()),
-                Component.literal(DecimalFormat.getIntegerInstance().format(fluidStack.get().getAmount()) + " mB"),
-                modNameComponent
-        );
+        return fluidStack.get().getTooltip();
     }
 
     @Override

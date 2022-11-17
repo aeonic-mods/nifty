@@ -1,12 +1,19 @@
 package design.aeonic.nifty.api.transfer.fluid;
 
+import design.aeonic.nifty.api.core.Services;
+import design.aeonic.nifty.api.platform.ModInfo;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 
+import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -29,6 +36,8 @@ public class FluidStack {
     private Fluid fluid;
     private long amount;
     private CompoundTag tag;
+    // Only created/updated/queried on the client, and only if it's used at least once - should be zero performance hit
+    private FluidTooltipCache tooltip;
 
     public static FluidStack of(Fluid fluid) {
         return of(fluid, BUCKET);
@@ -44,7 +53,7 @@ public class FluidStack {
 
     protected FluidStack(Fluid fluid, long amount, CompoundTag tag) {
         this.fluid = fluid == null ? Fluids.EMPTY : fluid;
-        this.amount = amount; // Tag getInt defaults to 0
+        this.amount = amount;
         this.tag = tag;
         checkEmpty();
     }
@@ -160,5 +169,37 @@ public class FluidStack {
     @Override
     public int hashCode() {
         return Objects.hash(fluid, amount, tag);
+    }
+
+    public List<Component> getTooltip() {
+        if (tooltip == null) tooltip = new FluidTooltipCache(this);
+        return tooltip.get(this);
+    }
+
+    public static class FluidTooltipCache {
+        private int lastHash;
+        private Component fluidName;
+        private Component amount;
+        private Component modName;
+        private Component fluidKey;
+
+        public FluidTooltipCache(FluidStack stack) {
+            lastHash = stack.hashCode();
+            update(stack);
+        }
+
+        public void update(FluidStack stack) {
+            ResourceLocation fluid = Registry.FLUID.getKey(stack.getFluid());
+
+            fluidName = Component.translatable("block." + fluid.getNamespace() + "." + fluid.getPath());
+            amount = Component.literal(DecimalFormat.getIntegerInstance().format(stack.getAmount()) + " mB");
+            modName = Component.literal(Services.PLATFORM.getModInfo(fluid.getNamespace()).map(ModInfo::getModName).orElse("Minecraft")).withStyle(ChatFormatting.BLUE, ChatFormatting.ITALIC);
+            fluidKey = Component.literal(fluid.toString()).withStyle(ChatFormatting.GRAY);
+        }
+
+        public List<Component> get(FluidStack stack) {
+            if (lastHash != stack.hashCode()) update(stack);
+            return Minecraft.getInstance().options.advancedItemTooltips ? List.of(fluidName, amount, modName, fluidKey) : List.of(fluidName, amount, modName);
+        }
     }
 }
