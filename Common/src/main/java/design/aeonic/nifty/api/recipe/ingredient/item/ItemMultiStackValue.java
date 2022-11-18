@@ -35,7 +35,7 @@ public class ItemMultiStackValue implements ItemIngredientValue {
     public static ItemMultiStackValue fromJson(JsonObject object) {
         List<ItemStack> stacks = new ArrayList<>();
 
-        CompoundTag nbt = object.has("nbt") ? CompoundTag.CODEC.parse(JsonOps.INSTANCE, object.get("nbt")).getOrThrow(false, Constants.LOG::error) : null;
+        CompoundTag nbt = object.has("nbt") ? CompoundTag.CODEC.parse(JsonOps.INSTANCE, object.get("nbt")).resultOrPartial(Constants.LOG::error).orElse(null) : null;
         JsonArray array = object.getAsJsonArray("item");
         array.forEach(element -> {
             ItemStack stack = new ItemStack(Registry.ITEM.get(new ResourceLocation(element.getAsString())), 1);
@@ -72,8 +72,8 @@ public class ItemMultiStackValue implements ItemIngredientValue {
         JsonArray array = new JsonArray();
         stacks.forEach(stack -> array.add(Registry.ITEM.getKey(stack.getItem()).toString()));
         object.add("item", array);
-        stacks.stream().filter(stack -> stack.getTag() != null).findFirst().ifPresent(stack -> {
-            object.add("nbt", CompoundTag.CODEC.encodeStart(JsonOps.INSTANCE, stack.getTag()).getOrThrow(false, Constants.LOG::error));
-        });
+        stacks.stream().filter(stack -> stack.getTag() != null).findFirst()
+                .flatMap(stack -> CompoundTag.CODEC.encodeStart(JsonOps.INSTANCE, stack.getTag()).resultOrPartial(Constants.LOG::error))
+                .ifPresent(tag -> object.add("nbt", tag));
     }
 }

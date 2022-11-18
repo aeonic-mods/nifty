@@ -27,7 +27,7 @@ public class ItemStackValue implements ItemIngredientValue {
 
     public static ItemStackValue fromJson(JsonObject object) {
         ItemStack stack = new ItemStack(Registry.ITEM.get(new ResourceLocation(object.get("item").getAsString())));
-        if (object.has("nbt")) stack.setTag(CompoundTag.CODEC.parse(JsonOps.INSTANCE, object.get("nbt")).getOrThrow(false, Constants.LOG::error));
+        if (object.has("nbt")) CompoundTag.CODEC.parse(JsonOps.INSTANCE, object.get("nbt")).result().ifPresent(stack::setTag);
         return new ItemStackValue(stack);
     }
 
@@ -56,7 +56,7 @@ public class ItemStackValue implements ItemIngredientValue {
     public void toJson(JsonObject object) {
         object.addProperty("Item", Registry.ITEM.getKey(stack.getItem()).toString());
         if (stack.getTag() != null) {
-            object.add("nbt", CompoundTag.CODEC.encodeStart(JsonOps.INSTANCE, stack.getTag()).getOrThrow(false, Constants.LOG::error));
+            CompoundTag.CODEC.encodeStart(JsonOps.INSTANCE, stack.getTag()).resultOrPartial(Constants.LOG::error).ifPresent(tag -> object.add("nbt", tag));
         }
     }
 }

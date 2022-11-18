@@ -33,7 +33,7 @@ public class FluidMultiStackValue implements IngredientValue<FluidStack> {
     public static FluidMultiStackValue fromJson(JsonObject object) {
         List<FluidStack> stacks = new ArrayList<>();
 
-        CompoundTag nbt = object.has("nbt") ? CompoundTag.CODEC.parse(JsonOps.INSTANCE, object.get("nbt")).getOrThrow(false, Constants.LOG::error) : null;
+        CompoundTag nbt = object.has("nbt") ? CompoundTag.CODEC.parse(JsonOps.INSTANCE, object.get("nbt")).resultOrPartial(Constants.LOG::error).orElse(null) : null;
         JsonArray array = object.getAsJsonArray("fluid");
         array.forEach(element -> stacks.add(FluidStack.of(Registry.FLUID.get(new ResourceLocation(element.getAsString())), 1, nbt)));
 
@@ -62,7 +62,7 @@ public class FluidMultiStackValue implements IngredientValue<FluidStack> {
         stacks.forEach(stack -> array.add(Registry.FLUID.getKey(stack.getFluid()).toString()));
         object.add("fluid", array);
         stacks.stream().filter(stack -> stack.getTag() != null).findFirst().ifPresent(stack -> {
-            object.add("nbt", CompoundTag.CODEC.encodeStart(JsonOps.INSTANCE, stack.getTag()).getOrThrow(false, Constants.LOG::error));
+            CompoundTag.CODEC.encodeStart(JsonOps.INSTANCE, stack.getTag()).resultOrPartial(Constants.LOG::error).ifPresent(tag -> object.add("nbt", tag));
         });
     }
 }

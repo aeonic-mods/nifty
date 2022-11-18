@@ -26,7 +26,7 @@ public class FluidStackValue implements IngredientValue<FluidStack> {
 
     public static FluidStackValue fromJson(JsonObject object) {
         Fluid fluid = Registry.FLUID.get(new ResourceLocation(object.get("fluid").getAsString()));
-        CompoundTag nbt = object.has("nbt") ? CompoundTag.CODEC.parse(JsonOps.INSTANCE, object.get("nbt")).getOrThrow(false, Constants.LOG::error) : null;
+        CompoundTag nbt = object.has("nbt") ? CompoundTag.CODEC.parse(JsonOps.INSTANCE, object.get("nbt")).resultOrPartial(Constants.LOG::error).orElse(null) : null;
         return new FluidStackValue(FluidStack.of(fluid, 1, nbt));
     }
 
@@ -50,7 +50,7 @@ public class FluidStackValue implements IngredientValue<FluidStack> {
     public void toJson(JsonObject object) {
         object.addProperty("fluid", Registry.FLUID.getKey(stack.getFluid()).toString());
         if (stack.getTag() != null) {
-            object.add("nbt", CompoundTag.CODEC.encodeStart(JsonOps.INSTANCE, stack.getTag()).getOrThrow(false, Constants.LOG::error));
+            CompoundTag.CODEC.encodeStart(JsonOps.INSTANCE, stack.getTag()).resultOrPartial(Constants.LOG::error).ifPresent(tag -> object.add("nbt", tag));
         }
     }
 }
