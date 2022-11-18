@@ -5,12 +5,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [v1.1.0]
+
 ### Added
 * `RecipeIngredient` and implementations for more modular item, fluid ingredients etc.
 * `RecipeOutput`, `RecipeOutputSet`, and item/fluid implementations
 * `ModularRecipe` for recipes that can input/output fluids and items, and can require processing times/energy consumption
 * `FluidStack#getTooltip`, along with a per-instance tooltip cache that is only created when it's queried for the first time.
 * `FluidStack#setTag`, because I guess I forgot it before oops
+* `Drawable` and its subclasses for configurable renderable things that aren't Gizmos - eventually Gizmos will be restructured to use this interface
+* `Drawables` with a bunch of convenient drawable instances, such as slots, recipe arrows (with filling variants), burn indicators etc.
+
+### Changed
+* Moved some rendering things around, like `Texture` - now found among drawables.
+* Some refactoring with gizmos to account for the above additions and changes.
 
 ## [v1.0.1] - 2022-11-16
 
