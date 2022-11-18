@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 * `RecipeIngredient` and implementations for more modular item, fluid ingredients etc.
+* `RecipeOutput`, `RecipeOutputSet`, and item/fluid implementations
+* `ModularRecipe` for recipes that can input/output fluids and items, and can require processing times/energy consumption
+* `FluidStack#getTooltip`, along with a per-instance tooltip cache that is only created when it's queried for the first time.
+* `FluidStack#setTag`, because I guess I forgot it before oops
 
 ## [v1.0.1] - 2022-11-16
 

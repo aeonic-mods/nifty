@@ -128,6 +128,10 @@ public class FluidStack {
         }
     }
 
+    public void setTag(CompoundTag tag) {
+        this.tag = tag;
+    }
+
     public boolean isEmpty() {
         return isEmptyCache;
     }
