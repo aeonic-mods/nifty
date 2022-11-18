@@ -3,7 +3,7 @@ package design.aeonic.nifty.api.client.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import design.aeonic.nifty.api.client.RenderUtils;
-import design.aeonic.nifty.api.client.Texture;
+import design.aeonic.nifty.api.client.screen.drawable.Texture;
 import design.aeonic.nifty.api.client.screen.input.Gizmo;
 import design.aeonic.nifty.api.client.screen.input.GizmoScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -43,26 +43,8 @@ public abstract class AbstractGizmoScreen extends Screen implements GizmoScreen 
         Gizmo hovered = getHoveredWidget(mouseX, mouseY);
         if (hovered != null) {
             var tooltip = hovered.getTooltip(this, mouseX - getRenderLeftPos(), mouseY - getRenderTopPos());
-            if (tooltip != null) renderTooltip(stack, mouseX, mouseY, tooltip);
+            if (tooltip != null) hovered.getTooltipStyle(this, mouseX - getRenderLeftPos(), mouseY - getRenderTopPos()).renderTooltip(this, stack, mouseX, mouseY, tooltip);
         }
-    }
-
-    public void renderTooltip(PoseStack stack, int mouseX, int mouseY, List<Component> tooltip) {
-        int x = mouseX + 6;
-        int y = mouseY + 12;
-        int width = font.width(tooltip.stream().max((a, b) -> font.width(a) - font.width(b)).orElse(Component.empty())) + 4;
-        int height = tooltip.size() * font.lineHeight + 3;
-
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderUtils.drawRect(stack, TOOLTIP, x - 2, y - 2, getBlitOffset() + 400, width, height, 0xF0FFFFFF);
-        stack.pushPose();
-        stack.translate(0, 0, 500);
-        for (int i = 0; i < tooltip.size(); i++) {
-            font.draw(stack, tooltip.get(i), x, y + i * font.lineHeight, 0xFFFFFF);
-        }
-        stack.popPose();
-        RenderSystem.disableBlend();
     }
 
     @Override

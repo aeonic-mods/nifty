@@ -2,7 +2,7 @@ package design.aeonic.nifty.api.client.screen.input.gizmos;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import design.aeonic.nifty.api.client.Texture;
+import design.aeonic.nifty.api.client.screen.drawable.Texture;
 import design.aeonic.nifty.api.client.screen.input.AbstractGizmo;
 import design.aeonic.nifty.api.client.screen.input.GizmoScreen;
 import design.aeonic.nifty.api.client.screen.input.SimpleMonoText;

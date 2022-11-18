@@ -1,12 +1,13 @@
-package design.aeonic.nifty.api.client;
+package design.aeonic.nifty.api.client.screen.drawable;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import design.aeonic.nifty.api.client.screen.drawable.drawables.StaticDrawable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public record Texture(ResourceLocation location, int fileWidth, int fileHeight, int width, int height, int u, int v) {
+public record Texture(ResourceLocation location, int fileWidth, int fileHeight, int width, int height, int u, int v) implements StaticDrawable {
     public Texture(String location, int fileWidth, int fileHeight) {
         this(new ResourceLocation(location), fileWidth, fileHeight);
     }
