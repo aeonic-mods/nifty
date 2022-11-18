@@ -6,9 +6,9 @@ import design.aeonic.nifty.api.client.screen.input.AbstractGizmo;
 import design.aeonic.nifty.api.client.screen.input.GizmoScreen;
 
 public class CheckboxGizmo extends AbstractGizmo {
-    public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 14, 14, 0, 24);
-    public static final Texture EMPTY = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 12, 12, 19, 0);
-    public static final Texture CHECKED = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 12, 12, 31, 0);
+    public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 14, 14, 0, 24);
+    public static final Texture EMPTY = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 12, 12, 19, 0);
+    public static final Texture CHECKED = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 12, 12, 31, 0);
 
     private boolean value;
 

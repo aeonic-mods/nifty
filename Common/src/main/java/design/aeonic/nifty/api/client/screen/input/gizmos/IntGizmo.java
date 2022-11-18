@@ -11,14 +11,14 @@ import net.minecraft.util.Mth;
 import org.lwjgl.glfw.GLFW;
 
 public class IntGizmo extends AbstractGizmo {
-    public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 12, 14, 0, 24);
+    public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 12, 14, 0, 24);
 
-    public static final Texture BOX_LEFT = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 10, 12, 0, 0);
-    public static final Texture BOX_FILL = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 64, 12, 0, 38);
-    public static final Texture BOX_LAST = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 1, 12, 10, 0);
+    public static final Texture BOX_LEFT = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 10, 12, 0, 0);
+    public static final Texture BOX_FILL = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 64, 12, 0, 38);
+    public static final Texture BOX_LAST = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 1, 12, 10, 0);
 
-    public static final Texture ARROW_UP = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 8, 6, 11, 0);
-    public static final Texture ARROW_DOWN = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 8, 6, 11, 6);
+    public static final Texture ARROW_UP = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 8, 6, 11, 0);
+    public static final Texture ARROW_DOWN = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 8, 6, 11, 6);
 
     protected final int minValue;
     protected final int maxValue;

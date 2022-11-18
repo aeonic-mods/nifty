@@ -8,11 +8,11 @@ import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.glfw.GLFW;
 
 public class SettingsGizmo extends AbstractGizmo {
-    public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 16, 16, 28, 48);
+    public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/gizmos_extended.png", 64, 64, 16, 16, 28, 48);
 
-    public static final Texture NORMAL = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 14, 14, 0, 49);
+    public static final Texture NORMAL = new Texture("nifty:textures/gui/gizmos_extended.png", 64, 64, 14, 14, 0, 49);
 
-    public static final Texture CLICKED = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 14, 14, 14, 49);
+    public static final Texture CLICKED = new Texture("nifty:textures/gui/gizmos_extended.png", 64, 64, 14, 14, 14, 49);
 
     protected final Runnable action;
     protected final Runnable shiftAction;

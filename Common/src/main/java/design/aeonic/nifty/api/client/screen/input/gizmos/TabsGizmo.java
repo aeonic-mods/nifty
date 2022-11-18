@@ -11,15 +11,15 @@ import java.util.function.Consumer;
 
 public class TabsGizmo extends AbstractGizmo {
 
-    public static final Texture TAB_LEFT = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 4, 14, 15, 12);
-    public static final Texture TAB_FILL = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 64, 14, 0, 30);
-    public static final Texture TAB_RIGHT = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 4, 14, 24, 12);
-    public static final Texture TAB_HOVERED_LEFT = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 4, 14, 30, 12);
-    public static final Texture TAB_HOVERED_FILL = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 64, 1, 0, 29);
-    public static final Texture TAB_HOVERED_RIGHT = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 4, 14, 39, 12);
-    public static final Texture TAB_SELECTED_LEFT = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 4, 17, 0, 12);
-    public static final Texture TAB_SELECTED_FILL = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 64, 17, 0, 44);
-    public static final Texture TAB_SELECTED_RIGHT = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 4, 17, 9, 12);
+    public static final Texture TAB_LEFT = new Texture("nifty:textures/gui/gizmos_extended.png", 64, 64, 4, 14, 15, 12);
+    public static final Texture TAB_FILL = new Texture("nifty:textures/gui/gizmos_extended.png", 64, 64, 64, 14, 0, 30);
+    public static final Texture TAB_RIGHT = new Texture("nifty:textures/gui/gizmos_extended.png", 64, 64, 4, 14, 24, 12);
+    public static final Texture TAB_HOVERED_LEFT = new Texture("nifty:textures/gui/gizmos_extended.png", 64, 64, 4, 14, 30, 12);
+    public static final Texture TAB_HOVERED_FILL = new Texture("nifty:textures/gui/gizmos_extended.png", 64, 64, 64, 1, 0, 29);
+    public static final Texture TAB_HOVERED_RIGHT = new Texture("nifty:textures/gui/gizmos_extended.png", 64, 64, 4, 14, 39, 12);
+    public static final Texture TAB_SELECTED_LEFT = new Texture("nifty:textures/gui/gizmos_extended.png", 64, 64, 4, 17, 0, 12);
+    public static final Texture TAB_SELECTED_FILL = new Texture("nifty:textures/gui/gizmos_extended.png", 64, 64, 64, 17, 0, 44);
+    public static final Texture TAB_SELECTED_RIGHT = new Texture("nifty:textures/gui/gizmos_extended.png", 64, 64, 4, 17, 9, 12);
 
     protected final int padding;
     protected final int spacing;

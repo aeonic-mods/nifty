@@ -10,15 +10,15 @@ import net.minecraft.network.chat.Component;
 import org.lwjgl.glfw.GLFW;
 
 public class ButtonGizmo extends AbstractGizmo {
-    public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 12, 14, 0, 24);
+    public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 12, 14, 0, 24);
 
-    public static final Texture BOX_LEFT = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 1, 12, 57, 0);
-    public static final Texture BOX_FILL = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 64, 12, 0, 12);
-    public static final Texture BOX_LAST = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 1, 12, 59, 0);
+    public static final Texture BOX_LEFT = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 1, 12, 57, 0);
+    public static final Texture BOX_FILL = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 64, 12, 0, 12);
+    public static final Texture BOX_LAST = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 1, 12, 59, 0);
 
-    public static final Texture CLICKED_LEFT = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 1, 12, 60, 0);
-    public static final Texture CLICKED_FILL = new Texture("nifty:textures/gui/input_widgets_extended.png", 64, 64, 64, 12, 0, 0);
-    public static final Texture CLICKED_LAST = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 1, 12, 62, 0);
+    public static final Texture CLICKED_LEFT = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 1, 12, 60, 0);
+    public static final Texture CLICKED_FILL = new Texture("nifty:textures/gui/gizmos_extended.png", 64, 64, 64, 12, 0, 0);
+    public static final Texture CLICKED_LAST = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 1, 12, 62, 0);
 
     protected final Component label;
     protected final Component shiftLabel;

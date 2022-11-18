@@ -13,12 +13,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class RedstoneGizmo extends AbstractGizmo {
-    public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 14, 14, 0, 24);
-    public static final Texture ALWAYS = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 12, 12, 0, 50);
-    public static final Texture NEVER = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 12, 12, 12, 50);
-    public static final Texture HIGH = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 12, 12, 24, 50);
-    public static final Texture LOW = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 12, 12, 36, 50);
-    public static final Texture PULSE = new Texture("nifty:textures/gui/input_widgets.png", 64, 64, 12, 12, 48, 50);
+    public static final Texture HIGHLIGHT = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 14, 14, 0, 24);
+    public static final Texture ALWAYS = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 12, 12, 0, 50);
+    public static final Texture NEVER = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 12, 12, 12, 50);
+    public static final Texture HIGH = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 12, 12, 24, 50);
+    public static final Texture LOW = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 12, 12, 36, 50);
+    public static final Texture PULSE = new Texture("nifty:textures/gui/gizmos.png", 64, 64, 12, 12, 48, 50);
 
     private RedstoneControl value;
 
