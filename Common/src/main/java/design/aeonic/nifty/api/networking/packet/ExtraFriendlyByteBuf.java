@@ -4,7 +4,6 @@ import design.aeonic.nifty.api.transfer.fluid.FluidStack;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.core.Registry;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
@@ -66,7 +65,7 @@ public class ExtraFriendlyByteBuf extends FriendlyByteBuf {
         return list;
     }
 
-    public void writeFluidStack(FluidStack stack) {
+    public void writeFluid(FluidStack stack) {
         if (stack.isEmpty()) writeBoolean(true);
         else {
             writeBoolean(false);
@@ -76,7 +75,7 @@ public class ExtraFriendlyByteBuf extends FriendlyByteBuf {
         }
     }
 
-    public FluidStack readFluidStack() {
+    public FluidStack readFluid() {
         if (readBoolean()) return FluidStack.EMPTY_STACK;
         return FluidStack.of(readById(Registry.FLUID), readLong(), readNbt());
     }

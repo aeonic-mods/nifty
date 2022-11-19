@@ -30,7 +30,7 @@ public class FluidOutput extends RecipeOutput<FluidStack> {
     }
 
     public static FluidOutput fromNetwork(ExtraFriendlyByteBuf buf) {
-        return new FluidOutput(buf.readFluidStack(), buf.readFloat());
+        return new FluidOutput(buf.readFluid(), buf.readFloat());
     }
 
     public static FluidOutput fromJson(JsonObject json) {
@@ -55,7 +55,7 @@ public class FluidOutput extends RecipeOutput<FluidStack> {
 
     @Override
     public void stackToNetwork(ExtraFriendlyByteBuf buf, FluidStack stack) {
-        buf.writeFluidStack(stack);
+        buf.writeFluid(stack);
     }
 
     @Override

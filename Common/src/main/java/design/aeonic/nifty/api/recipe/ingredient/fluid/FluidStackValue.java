@@ -21,7 +21,7 @@ public class FluidStackValue implements IngredientValue<FluidStack> {
     }
 
     public static FluidStackValue fromNetwork(ExtraFriendlyByteBuf buf) {
-        return new FluidStackValue(buf.readFluidStack());
+        return new FluidStackValue(buf.readFluid());
     }
 
     public static FluidStackValue fromJson(JsonObject object) {
@@ -43,7 +43,7 @@ public class FluidStackValue implements IngredientValue<FluidStack> {
     @Override
     public void toNetwork(ExtraFriendlyByteBuf buf) {
         buf.writeEnum(FluidIngredient.Type.STACK);
-        buf.writeFluidStack(stack);
+        buf.writeFluid(stack);
     }
 
     @Override

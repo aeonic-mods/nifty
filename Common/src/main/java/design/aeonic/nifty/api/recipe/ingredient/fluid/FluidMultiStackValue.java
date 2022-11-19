@@ -27,7 +27,7 @@ public class FluidMultiStackValue implements IngredientValue<FluidStack> {
     }
 
     public static FluidMultiStackValue fromNetwork(ExtraFriendlyByteBuf buf) {
-        return new FluidMultiStackValue(buf.readList(ExtraFriendlyByteBuf::readFluidStack));
+        return new FluidMultiStackValue(buf.readList(ExtraFriendlyByteBuf::readFluid));
     }
 
     public static FluidMultiStackValue fromJson(JsonObject object) {
@@ -53,7 +53,7 @@ public class FluidMultiStackValue implements IngredientValue<FluidStack> {
     @Override
     public void toNetwork(ExtraFriendlyByteBuf buf) {
         buf.writeEnum(FluidIngredient.Type.MULTI_STACK);
-        buf.writeList(stacks, ExtraFriendlyByteBuf::writeFluidStack);
+        buf.writeList(stacks, ExtraFriendlyByteBuf::writeFluid);
     }
 
     @Override
