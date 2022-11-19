@@ -46,37 +46,38 @@ jobs:
             Common/build/libs/*.jar
             Fabric/build/libs/*.jar
             Forge/build/libs/*.jar
+      - name: Janky mc-publish fix - copy mod files to root
+        run: |
+          cp Fabric/src/main/resources/fabric.mod.json .
+          cp Forge/src/main/resources/META-INF/mods.toml .
       - name: Fabric mod release
         uses: Kir-Antipov/mc-publish@v3.2
-        working-directory: ./Fabric
         with:
           modrinth-id: IlyLeWOY
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-id: 702601
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          changelog-file: ../CHANGELOG.md
-          files-primary: build/libs/!(*-@(dev|sources|javadoc)).jar
-          files-secondary: build/libs/*-@(dev|sources|javadoc).jar
+          changelog-file: CHANGELOG.md
+          files-primary: Fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
+          files-secondary: Fabric/build/libs/*-@(dev|sources|javadoc).jar
           loaders: |
             fabric
             quilt
           name: Fabric ${{ steps.gradle-properties.outputs.minecraft_version }}-${{ steps.tagName.outputs.tag }}
           version: ${{ steps.tagName.outputs.tag }}
           game-versions: ${{ steps.gradle-properties.outputs.minecraft_version }}
-          dependencies: |
-            fabric | depends | *
       - name: Forge mod release
         uses: Kir-Antipov/mc-publish@v3.2
-        working-directory: ./Forge
         with:
           modrinth-id: IlyLeWOY
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-id: 702601
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          changelog-file: ../CHANGELOG.md
-          files-primary: build/libs/!(*-@(dev|sources|javadoc)).jar
-          files-secondary: build/libs/*-@(dev|sources|javadoc).jar
-          loaders: forge
+          changelog-file: CHANGELOG.md
+          files-primary: Forge/build/libs/!(*-@(dev|sources|javadoc)).jar
+          files-secondary: Forge/build/libs/*-@(dev|sources|javadoc).jar
+          loaders: |
+            forge
           name: Forge ${{ steps.gradle-properties.outputs.minecraft_version }}-${{ steps.tagName.outputs.tag }}
           version: ${{ steps.tagName.outputs.tag }}
           game-versions: ${{ steps.gradle-properties.outputs.minecraft_version }}
