@@ -74,7 +74,7 @@ jobs:
           changelog-path: CHANGELOG.md
           files-primary: Forge/build/libs/!(*-@(dev|sources|javadoc)).jar
           files-secondary: Forge/build/libs/*-@(dev|sources|javadoc).jar
-          loaders: [forge]
+          loaders: aforge
           name: Forge ${{ steps.gradle-properties.outputs.minecraft_version }}-${{ steps.tagName.outputs.tag }}
           version: ${{ steps.tagName.outputs.tag }}
           game-versions: ${{ steps.gradle-properties.outputs.minecraft_version }}
