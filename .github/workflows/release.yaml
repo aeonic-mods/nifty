@@ -48,6 +48,7 @@ jobs:
             Forge/build/libs/*.jar
       - name: Janky mc-publish fix - copy mod files to root
         run: |
+          mkdir -p src/main/resource/META-INF
           cp Fabric/src/main/resources/fabric.mod.json ./src/main/resources/fabric.mod.json
           cp Forge/src/main/resources/META-INF/mods.toml ./src/main/resources/META-INF/mods.toml
       - name: Fabric mod release
