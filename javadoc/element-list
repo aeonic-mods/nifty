@@ -1,6 +1,8 @@
 design.aeonic.nifty.api.aspect
 design.aeonic.nifty.api.client
 design.aeonic.nifty.api.client.screen
+design.aeonic.nifty.api.client.screen.drawable
+design.aeonic.nifty.api.client.screen.drawable.drawables
 design.aeonic.nifty.api.client.screen.input
 design.aeonic.nifty.api.client.screen.input.gizmos
 design.aeonic.nifty.api.core
@@ -11,6 +13,13 @@ design.aeonic.nifty.api.networking.container
 design.aeonic.nifty.api.networking.container.field
 design.aeonic.nifty.api.networking.packet
 design.aeonic.nifty.api.platform
+design.aeonic.nifty.api.recipe
+design.aeonic.nifty.api.recipe.ingredient
+design.aeonic.nifty.api.recipe.ingredient.fluid
+design.aeonic.nifty.api.recipe.ingredient.item
+design.aeonic.nifty.api.recipe.output
+design.aeonic.nifty.api.recipe.output.fluid
+design.aeonic.nifty.api.recipe.output.item
 design.aeonic.nifty.api.transfer
 design.aeonic.nifty.api.transfer.base
 design.aeonic.nifty.api.transfer.energy
