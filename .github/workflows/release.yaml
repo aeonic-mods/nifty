@@ -36,11 +36,14 @@ jobs:
         run: ./gradlew build
       - name: Generate Javadocs
         run: ./gradlew javadoc
+      - name: Read changelog
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2
       - name: Release on GitHub
         uses: softprops/action-gh-release@v1
         id: ghRelease
         with:
-          body_path: CHANGELOG.md
+          body: ${{ steps.changelog_reader.outputs.changes }}
           name: ${{ steps.tagName.outputs.tag }}
           files: |
             Common/build/libs/*.jar
@@ -53,7 +56,7 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-id: 702601
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          changelog-file: CHANGELOG.md
+          changelog: ${{ steps.changelog_reader.outputs.changes }}
           files-primary: Fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
           files-secondary: Fabric/build/libs/*-@(dev|sources).jar
           loaders: |
@@ -69,7 +72,7 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-id: 702601
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          changelog-file: CHANGELOG.md
+          changelog: ${{ steps.changelog_reader.outputs.changes }}
           files-primary: Forge/build/libs/!(*-@(dev|sources|javadoc)).jar
           files-secondary: Forge/build/libs/*-@(dev|sources).jar
           loaders: |
