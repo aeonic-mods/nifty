@@ -49,8 +49,9 @@ jobs:
       - name: Janky mc-publish fix - copy mod files to root
         run: |
           mkdir -p src/main/resources/META-INF
-          cp Fabric/src/main/resources/fabric.mod.json ./src/main/resources
-          cp Forge/src/main/resources/META-INF/mods.toml ./src/main/resources/META-INF
+          cp Fabric/src/main/resources/fabric.mod.json ./src/main/resources/
+          cp Forge/src/main/resources/META-INF/mods.toml ./src/main/resources/META-INF/
+          ls -R
       - name: Fabric mod release
         uses: Kir-Antipov/mc-publish@v3.2
         with:
