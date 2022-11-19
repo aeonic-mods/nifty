@@ -56,7 +56,9 @@ jobs:
           changelog-path: CHANGELOG.md
           files-primary: Fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
           files-secondary: Fabric/build/libs/*-@(dev|sources|javadoc).jar
-          loaders: [fabric, quilt]
+          loaders: |
+            fabric
+            quilt
           name: Fabric ${{ steps.gradle-properties.outputs.minecraft_version }}-${{ steps.tagName.outputs.tag }}
           version: ${{ steps.tagName.outputs.tag }}
           game-versions: ${{ steps.gradle-properties.outputs.minecraft_version }}
