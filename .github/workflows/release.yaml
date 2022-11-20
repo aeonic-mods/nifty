@@ -58,7 +58,7 @@ jobs:
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           changelog: ${{ steps.changelog_reader.outputs.changes }}
           files-primary: Fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
-          files-secondary: '{Fabric/build/libs/*-@(dev|sources|javadoc).jar,Common/build/libs/*.jar}'
+          files-secondary: Fabric/build/libs/*-@(dev|sources).jar
           loaders: |
             fabric
             quilt
@@ -74,7 +74,7 @@ jobs:
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           changelog: ${{ steps.changelog_reader.outputs.changes }}
           files-primary: Forge/build/libs/!(*-@(dev|sources|javadoc)).jar
-          files-secondary: '{Forge/build/libs/*-@(dev|sources|javadoc).jar,Common/build/libs/*.jar}'
+          files-secondary: Forge/build/libs/*-@(dev|sources).jar
           loaders: |
             forge
           name: Forge ${{ steps.gradle-properties.outputs.minecraft_version }}-${{ steps.tagName.outputs.tag }}
