@@ -40,7 +40,7 @@ public class EnergyGizmo extends AbstractGizmo {
     @Nullable
     @Override
     public List<Component> getTooltip(GizmoScreen screen, int mouseX, int mouseY) {
-        return List.of(Component.literal(String.format("%,d", stored.get()) + " / " + String.format("%,d", capacity.get())), Translations.Generic.POWER_UNITS);
+        return List.of(Component.literal(String.format("%,d", stored.get()) + " / " + String.format("%,d", capacity.get()) + " ").append(Translations.Generic.POWER_UNITS));
     }
 
     @Override
