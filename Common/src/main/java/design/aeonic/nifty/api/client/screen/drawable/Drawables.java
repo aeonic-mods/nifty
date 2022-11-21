@@ -65,5 +65,80 @@ public final class Drawables {
      */
     public static final FillingDrawable BURN_TIMER = new FillingDrawable(FURNACE_FIRE_EMPTY, FURNACE_FIRE_FULL, Direction2D.UP);
 
+    /**
+     * The background part of a horizontal energy bar that spans most of a normal-sized container, 162x5.
+     */
+    public static final Texture ENERGY_BAR_HORIZONTAL_BG = new Texture("nifty:textures/gui/energy.png", 256, 256, 162, 5);
+
+    /**
+     * The filling part of a horizontal energy bar that spans most of a normal-sized container, 162x5.
+     */
+    public static final Texture ENERGY_BAR_HORIZONTAL_FILL = new Texture("nifty:textures/gui/energy.png", 256, 256, 162, 5, 0, 5);
+
+    /**
+     * The background part of a wider vertical energy bar that spans most of a normal-sized container (vertically), 9x72.
+     */
+    public static final Texture ENERGY_BAR_VERTICAL_TALL_WIDE_BG = new Texture("nifty:textures/gui/energy.png", 256, 256, 9, 72, 0, 10);
+
+    /**
+     * The filling part of a wider vertical energy bar that spans most of a normal-sized container (vertically), 9x72.
+     */
+    public static final Texture ENERGY_BAR_VERTICAL_TALL_WIDE_FILL = new Texture("nifty:textures/gui/energy.png", 256, 256, 9, 72, 9, 10);
+
+    /**
+     * The background part of a thinner vertical energy bar that spans most of a normal-sized container (vertically), 5x72.
+     */
+    public static final Texture ENERGY_BAR_VERTICAL_TALL_THIN_BG = new Texture("nifty:textures/gui/energy.png", 256, 256, 5, 72, 18, 10);
+
+    /**
+     * The filling part of a thinner vertical energy bar that spans most of a normal-sized container (vertically), 5x72.
+     */
+    public static final Texture ENERGY_BAR_VERTICAL_TALL_THIN_FILL = new Texture("nifty:textures/gui/energy.png", 256, 256, 5, 72, 23, 10);
+
+    /**
+     * The background part of a wider vertical energy bar that spans half of a normal-sized container (vertically), 5x36.
+     */
+    public static final Texture ENERGY_BAR_VERTICAL_SHORT_WIDE_BG = new Texture("nifty:textures/gui/energy.png", 256, 256, 9, 36, 0, 82);
+
+    /**
+     * The filling part of a wider vertical energy bar that spans half of a normal-sized container (vertically), 5x36.
+     */
+    public static final Texture ENERGY_BAR_VERTICAL_SHORT_WIDE_FILL = new Texture("nifty:textures/gui/energy.png", 256, 256, 9, 36, 9, 82);
+
+    /**
+     * The background part of a thinner vertical energy bar that spans half of a normal-sized container (vertically), 5x36.
+     */
+    public static final Texture ENERGY_BAR_VERTICAL_SHORT_THIN_BG = new Texture("nifty:textures/gui/energy.png", 256, 256, 5, 36, 18, 82);
+
+    /**
+     * The filling part of a thinner vertical energy bar that spans half of a normal-sized container (vertically), 5x36.
+     */
+    public static final Texture ENERGY_BAR_VERTICAL_SHORT_THIN_FILL = new Texture("nifty:textures/gui/energy.png", 256, 256, 5, 36, 23, 82);
+
+    /**
+     * A horizontal energy bar. Lacks a tooltip; in most cases you'll want {@link design.aeonic.nifty.api.client.screen.input.gizmos.EnergyGizmo}.
+     */
+    public static final FillingDrawable ENERGY_BAR_HORIZONTAL = new FillingDrawable(ENERGY_BAR_HORIZONTAL_BG, ENERGY_BAR_HORIZONTAL_FILL);
+
+    /**
+     * A tall, wide vertical energy bar. Lacks a tooltip; in most cases you'll want {@link design.aeonic.nifty.api.client.screen.input.gizmos.EnergyGizmo}.
+     */
+    public static final FillingDrawable ENERGY_BAR_VERTICAL_TALL_WIDE = new FillingDrawable(ENERGY_BAR_VERTICAL_TALL_WIDE_BG, ENERGY_BAR_VERTICAL_TALL_WIDE_FILL, Direction2D.UP);
+
+    /**
+     * A tall, thin vertical energy bar. Lacks a tooltip; in most cases you'll want {@link design.aeonic.nifty.api.client.screen.input.gizmos.EnergyGizmo}.
+     */
+    public static final FillingDrawable ENERGY_BAR_VERTICAL_TALL_THIN = new FillingDrawable(ENERGY_BAR_VERTICAL_TALL_THIN_BG, ENERGY_BAR_VERTICAL_TALL_THIN_FILL, Direction2D.UP);
+
+    /**
+     * A short, wide vertical energy bar. Lacks a tooltip; in most cases you'll want {@link design.aeonic.nifty.api.client.screen.input.gizmos.EnergyGizmo}.
+     */
+    public static final FillingDrawable ENERGY_BAR_VERTICAL_SHORT_WIDE = new FillingDrawable(ENERGY_BAR_VERTICAL_SHORT_WIDE_BG, ENERGY_BAR_VERTICAL_SHORT_WIDE_FILL, Direction2D.UP);
+
+    /**
+     * A short, thin vertical energy bar. Lacks a tooltip; in most cases you'll want {@link design.aeonic.nifty.api.client.screen.input.gizmos.EnergyGizmo}.
+     */
+    public static final FillingDrawable ENERGY_BAR_VERTICAL_SHORT_THIN = new FillingDrawable(ENERGY_BAR_VERTICAL_SHORT_THIN_BG, ENERGY_BAR_VERTICAL_SHORT_THIN_FILL, Direction2D.UP);
+
     private Drawables() {}
 }

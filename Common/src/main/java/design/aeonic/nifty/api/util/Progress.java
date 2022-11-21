@@ -23,6 +23,10 @@ public interface Progress extends Supplier<Float> {
         return () -> max.get() == 0 ? 0 : value.get() / (float) max.get();
     }
 
+    static Progress ofLong(Supplier<Long> value, Supplier<Long> max) {
+        return () -> max.get() == 0L ? 0L : value.get() / (float) max.get();
+    }
+
     default Progress oneMinus() {
         return () -> 1 - get();
     }
