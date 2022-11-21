@@ -2,10 +2,12 @@ package design.aeonic.nifty.api.client.screen.drawable;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import design.aeonic.nifty.api.client.RenderUtils;
 import design.aeonic.nifty.api.client.screen.drawable.drawables.StaticDrawable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
+import org.lwjgl.system.linux.Stat;
 
 public record Texture(ResourceLocation location, int fileWidth, int fileHeight, int width, int height, int u, int v) implements StaticDrawable {
     public Texture(String location, int fileWidth, int fileHeight) {
@@ -26,6 +28,16 @@ public record Texture(ResourceLocation location, int fileWidth, int fileHeight, 
 
     public Texture(ResourceLocation location, int fileWidth, int fileHeight, int width, int height) {
         this(location, fileWidth, fileHeight, width, height, 0, 0);
+    }
+
+    public StaticDrawable withColor(int color) {
+        float[] rgba = new float[4];
+        RenderUtils.unpackRGBA(color, rgba);
+        return (stack, x, y, zOffset) -> draw(stack, x, y, zOffset, rgba[0], rgba[1], rgba[2], rgba[3]);
+    }
+
+    public StaticDrawable withColor(float r, float g, float b, float a) {
+        return (stack, x, y, zOffset) -> draw(stack, x, y, zOffset, r, g, b, a);
     }
 
     public void draw(PoseStack stack, int x, int y, int zOffset) {
@@ -49,7 +61,20 @@ public record Texture(ResourceLocation location, int fileWidth, int fileHeight, 
     }
 
     public void drawWithUv(PoseStack stack, int x, int y, int zOffset, int width, int height, int u, int v) {
-        Screen.blit(stack, x, y, zOffset, u, v, width, height, fileWidth, fileHeight);
+        drawWithUv(stack, x, y, zOffset, width, height, u, v, 1, 1, 1, 1, false);
+    }
+
+    public void drawWithUv(PoseStack stack, int x, int y, int zOffset, int width, int height, int u, int v, float r, float g, float b, float a) {
+        drawWithUv(stack, x, y, zOffset, width, height, u, v, r, g, b, a, false);
+    }
+
+    public void drawWithUv(PoseStack stack, int x, int y, int zOffset, int width, int height, int u, int v, float r, float g, float b, float a, boolean blend) {
+        setup(r, g, b, a);
+        if (blend) {
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+        }
+        Screen.blit(stack, x, y, zOffset, this.u + u, this.v + v, width, height, fileWidth, fileHeight);
     }
 
     public void draw(PoseStack stack, int x, int y, int zOffset, int width, int height, float r, float g, float b, float a, boolean blend) {
