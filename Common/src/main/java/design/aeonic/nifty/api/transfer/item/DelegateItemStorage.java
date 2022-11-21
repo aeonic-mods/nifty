@@ -4,7 +4,7 @@ import design.aeonic.nifty.api.transfer.Storage;
 import design.aeonic.nifty.api.transfer.base.DelegateStorage;
 import net.minecraft.world.item.ItemStack;
 
-public class DelegateItemStorage extends DelegateStorage<ItemStack> {
+public class DelegateItemStorage extends DelegateStorage<ItemStack> implements ItemStorage {
     public DelegateItemStorage(Storage<ItemStack> parent, int... slots) {
         super(parent, slots);
     }
