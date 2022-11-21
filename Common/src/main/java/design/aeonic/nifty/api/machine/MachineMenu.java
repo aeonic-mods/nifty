@@ -51,7 +51,7 @@ public class MachineMenu<T extends MachineMenu<T>> extends AbstractContainerMenu
                 }
                 if (!triedMove) {
                     if (index < 27 + containerCount) {
-                        if (!moveItemStackTo(movingStack, 31, 40, false))
+                        if (!moveItemStackTo(movingStack, 27 + containerCount, 36 + containerCount, false))
                             return ItemStack.EMPTY;
                     } else if (index >= 27 + containerCount && index < 36 + containerCount && !moveItemStackTo(movingStack, containerCount, 27 + containerCount, false))
                         return ItemStack.EMPTY;
