@@ -6,7 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
-* Add `DelegateStorage`, item & fluid implementations; `ItemStorage#getDelegate` & `FluidStorage#getDelegate` for exposing certain slots to different sides
+* `DelegateStorage`, item & fluid implementations; `ItemStorage#getDelegate` & `FluidStorage#getDelegate` for exposing certain slots to different sides
+* Energy bar textures, drawables, and `EnergyGizmo` for rendering energy info
 
 ### Changed
 * Fix `MachineMenu#quickMoveStack` crashes
