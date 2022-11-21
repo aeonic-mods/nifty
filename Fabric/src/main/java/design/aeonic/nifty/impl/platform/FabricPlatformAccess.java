@@ -50,7 +50,8 @@ public class FabricPlatformAccess implements PlatformAccess {
 
     @Override
     public int getBurnTime(ItemStack stack) {
-        return FuelRegistry.INSTANCE.get(stack.getItem());
+        Integer burnTime = FuelRegistry.INSTANCE.get(stack.getItem());
+        return burnTime == null ? 0 : burnTime;
     }
 
     @Override
