@@ -6,12 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
-* Add `DelegateStorage`, item & fluid implementations, `ItemStorage#getDelegate` & `FluidStorage#getDelegate` for exposing certain slots to different sides
+* Add `DelegateStorage`, item & fluid implementations; `ItemStorage#getDelegate` & `FluidStorage#getDelegate` for exposing certain slots to different sides
 
 ### Changed
 * Fix `MachineMenu#quickMoveStack` crashes
 * Fix Fabric burn time method unboxing null integers
 * Fix some texture locations (`containers` -> `container`)
+* Fix `FillingDrawable` not rendering correctly
 
 ## [v1.1.0]
 
