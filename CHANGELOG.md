@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 * Fix `MachineMenu#quickMoveStack` crashes
+* Fix `MachineBlockEntity` not running child behavior
 * Fix Fabric burn time method unboxing null integers
 * Fix some texture locations (`containers` -> `container`)
 * Fix `FillingDrawable` not rendering correctly
