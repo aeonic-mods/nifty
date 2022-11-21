@@ -48,6 +48,10 @@ public record Texture(ResourceLocation location, int fileWidth, int fileHeight, 
         draw(stack, x, y, zOffset, width, height, 1, 1, 1, 1, false);
     }
 
+    public void drawWithUv(PoseStack stack, int x, int y, int zOffset, int width, int height, int u, int v) {
+        Screen.blit(stack, x, y, zOffset, u, v, width, height, fileWidth, fileHeight);
+    }
+
     public void draw(PoseStack stack, int x, int y, int zOffset, int width, int height, float r, float g, float b, float a, boolean blend) {
         setup(r, g, b, a);
         if (blend) {

@@ -63,7 +63,7 @@ public final class Drawables {
      * For basic use, see {@link FillingDrawable#with} - you'll generally just want {@link Progress#of(Supplier, Supplier)}
      * ie {@code BURN_TIMER.with(Progress.of(() -> litTime, () -> litDuration))}
      */
-    public static final FillingDrawable BURN_TIMER = new FillingDrawable(FURNACE_FIRE_EMPTY, FURNACE_FIRE_FULL, Direction2D.UP, Progress::oneMinus);
+    public static final FillingDrawable BURN_TIMER = new FillingDrawable(FURNACE_FIRE_EMPTY, FURNACE_FIRE_FULL, Direction2D.UP);
 
     private Drawables() {}
 }

@@ -5,29 +5,21 @@ import design.aeonic.nifty.api.client.screen.drawable.Drawable;
 import design.aeonic.nifty.api.client.screen.drawable.Texture;
 import design.aeonic.nifty.api.util.Direction2D;
 
-import javax.annotation.Nullable;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class FillingDrawable implements Drawable<Float> {
     private final Texture empty;
     private final Texture fill;
     private final Direction2D direction;
-    private final @Nullable Function<Float, Float> processor;
 
     public FillingDrawable(Texture empty, Texture fill) {
         this(empty, fill, Direction2D.RIGHT);
     }
 
     public FillingDrawable(Texture empty, Texture fill, Direction2D direction) {
-        this(empty, fill, direction, null);
-    }
-
-    public FillingDrawable(Texture empty, Texture fill, Direction2D direction, Function<Float, Float> processor) {
         this.empty = empty;
         this.fill = fill;
         this.direction = direction;
-        this.processor = processor;
     }
 
     @Override
@@ -36,22 +28,21 @@ public class FillingDrawable implements Drawable<Float> {
 
         empty.draw(stack, x, y, zOffset);
 
-        float progress = processor == null ? context : processor.apply(context);
         switch (direction) {
             case RIGHT -> {
-                int fillWidth = (int) (empty.width() / progress);
+                int fillWidth = (int) (empty.width() * context);
                 fill.draw(stack, x, y, zOffset, fillWidth, fill.height());
             }
             case LEFT -> {
-                int fillWidth = (int) (empty.width() / progress);
-                fill.draw(stack, x + (fill.width() - fillWidth), y, zOffset, fillWidth, fill.height());
+                int fillWidth = (int) (empty.width() * context);
+                fill.drawWithUv(stack, x + (fill.width() - fillWidth), y, zOffset, fillWidth, fill.height(), fill.width() - fillWidth, 0);
             }
             case UP -> {
-                int fillHeight = (int) (empty.height() / progress);
-                fill.draw(stack, x, y + (fill.height() - fillHeight), zOffset, fill.width(), fillHeight);
+                int fillHeight = (int) (empty.height() * context);
+                fill.drawWithUv(stack, x, y + (fill.height() - fillHeight), zOffset, fill.width(), fillHeight, 0, fill.height() - fillHeight);
             }
             case DOWN -> {
-                int fillHeight = (int) (empty.height() / progress);
+                int fillHeight = (int) (empty.height() * context);
                 fill.draw(stack, x, y, zOffset, fill.width(), fillHeight);
             }
         }
