@@ -55,10 +55,4 @@ public interface Storage<T> {
      */
     T extract(int slot, long amount, boolean simulate);
 
-    /**
-     * Gets a storage delegate that only exposes the given slots. Used, for example, to expose output slots only
-     * on a given side.
-     */
-    DelegateStorage<T> getDelegate(int... slots);
-
 }
