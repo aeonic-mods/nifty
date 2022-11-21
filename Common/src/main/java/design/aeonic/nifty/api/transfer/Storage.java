@@ -1,5 +1,6 @@
 package design.aeonic.nifty.api.transfer;
 
+import design.aeonic.nifty.api.transfer.base.DelegateStorage;
 import net.minecraft.MethodsReturnNonnullByDefault;
 
 import javax.annotation.Nonnull;
@@ -53,5 +54,11 @@ public interface Storage<T> {
      * If simulate is true, doesn't modify the actual storage contents.
      */
     T extract(int slot, long amount, boolean simulate);
+
+    /**
+     * Gets a storage delegate that only exposes the given slots. Used, for example, to expose output slots only
+     * on a given side.
+     */
+    DelegateStorage<T> getDelegate(int... slots);
 
 }
