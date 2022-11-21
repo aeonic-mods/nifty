@@ -39,6 +39,14 @@ public class FillingDrawable implements Drawable<Float> {
         return new FillingDrawable(empty, fill, direction, red, green, blue, alpha);
     }
 
+    public Texture getEmptyTexture() {
+        return empty;
+    }
+
+    public Texture getFillTexture() {
+        return fill;
+    }
+
     @Override
     public void draw(PoseStack stack, int x, int y, int zOffset, Float context) {
         assert context >= 0f && context <= 1f;

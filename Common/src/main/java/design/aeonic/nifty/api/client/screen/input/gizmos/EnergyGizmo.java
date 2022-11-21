@@ -5,6 +5,7 @@ import design.aeonic.nifty.api.client.screen.drawable.Drawables;
 import design.aeonic.nifty.api.client.screen.drawable.drawables.FillingDrawable;
 import design.aeonic.nifty.api.client.screen.input.AbstractGizmo;
 import design.aeonic.nifty.api.client.screen.input.GizmoScreen;
+import design.aeonic.nifty.api.client.screen.input.TooltipStyle;
 import design.aeonic.nifty.api.core.Translations;
 import net.minecraft.network.chat.Component;
 
@@ -35,6 +36,11 @@ public class EnergyGizmo extends AbstractGizmo {
     @Override
     public boolean mouseDown(GizmoScreen screen, int mouseX, int mouseY, int button) {
         return false;
+    }
+
+    @Override
+    public TooltipStyle getTooltipStyle(GizmoScreen screen, int mouseX, int mouseY) {
+        return TooltipStyle.VANILLA;
     }
 
     @Nullable
