@@ -41,6 +41,7 @@ public abstract class MachineBlockEntity extends BlockEntity implements AspectPr
     public void serverTick(ServerLevel level, BlockPos pos, BlockState state) {
         if (canRun()) {
             if (getMachineConsumption() != null) getMachineConsumption().run();
+            runMachine(level, pos, state);
         }
     }
 
