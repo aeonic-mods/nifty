@@ -2,6 +2,7 @@ package design.aeonic.nifty.api.util;
 
 import net.minecraft.util.Mth;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 @FunctionalInterface
@@ -22,7 +23,11 @@ public interface Progress extends Supplier<Float> {
         return () -> max.get() == 0 ? 0 : value.get() / (float) max.get();
     }
 
-    static float oneMinus(float value) {
-        return 1 - value;
+    default Progress oneMinus() {
+        return () -> 1 - get();
+    }
+
+    default Progress map(Function<Float, Float> processor) {
+        return () -> processor.apply(get());
     }
 }
